@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-//Routes:
-import { withRouter  } from "react-router-dom";
 
 //redux:
 import { Provider } from "react-redux";
@@ -8,6 +6,7 @@ import store from "./ducks/store";
 
 //routes:
 import routes from './routes'
+import { withRouter } from 'react-router-dom'
 
 //Components:
 import Header from './components/Header/Header'
@@ -22,6 +21,7 @@ class App extends Component {
         store={store}>
           <div className="App">
             <Header 
+              push={this.props.history.push}
               pathname={this.props.location.pathname}
             />
             <Nav 

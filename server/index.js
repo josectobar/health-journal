@@ -45,4 +45,8 @@ massive(MASSIVE_CONNECTION)
         app.listen(SERVER_PORT, () => console.log(`Live on port: ${SERVER_PORT}`))
     })
 
+//EndPoints:
 app.post('/auth/register', authCtrl.register)
+app.post('/auth/login', authCtrl.login)
+app.post('/auth/logout', authCtrl.logout)
+app.get('/auth/current', authCtrl.current)

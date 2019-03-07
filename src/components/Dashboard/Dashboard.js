@@ -6,6 +6,7 @@ import Stats from './Stats/Stats'
 import Articles from './Articles/Articles'
 
 class Dashboard extends Component {
+
     render() {
         return (
             <div>

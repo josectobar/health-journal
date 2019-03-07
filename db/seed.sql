@@ -2,7 +2,9 @@ CREATE TABLE "users" (
 	"id" serial NOT NULL,
 	"name" varchar(100) NOT NULL,
 	"username" varchar(100) NOT NULL,
+	"email" varchar(100) NOT NULL,
 	"password" varchar(100) NOT NULL,
+	"wizard" bool NOT NULL DEFAULT 'true',
 	CONSTRAINT users_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -12,7 +14,7 @@ CREATE TABLE "users" (
 
 CREATE TABLE "entries" (
 	"id" serial NOT NULL,
-	"date" DATE NOT NULL,
+	"date" varchar(100) NOT NULL,
 	"content" TEXT NOT NULL,
 	"user_id" int NOT NULL,
 	"private" bool NOT NULL DEFAULT 'true',
@@ -67,7 +69,7 @@ CREATE TABLE "indicator_users" (
 	"user_id" int NOT NULL,
 	"indicator_id" int NOT NULL,
 	"reading" numeric NOT NULL,
-	"date" DATE NOT NULL
+	"date" varchar(100) NOT NULL
 ) WITH (
   OIDS=FALSE
 );
@@ -128,4 +130,9 @@ ALTER TABLE "conditions" ADD CONSTRAINT "conditions_fk" FOREIGN KEY ("user_id") 
 ALTER TABLE "medication_users" ADD CONSTRAINT "medication_users_fk0" FOREIGN KEY ("user_id") REFERENCES "users"("id");
 ALTER TABLE "medication_users" ADD CONSTRAINT "medication_users_fk1" FOREIGN KEY ("medication_id") REFERENCES "medication"("id");
 
-
+/* Added on Wed Mar 6th */
+INSERT INTO "public"."indicators"("indicator_name") VALUES('Glucose level') RETURNING "indicator_name", "id";
+INSERT INTO "public"."indicators"("indicator_name") VALUES('Blood pressure - Systolic') RETURNING "indicator_name", "id";
+INSERT INTO "public"."indicators"("indicator_name") VALUES('Blood pressure - Diastolic') RETURNING "indicator_name", "id";
+INSERT INTO "public"."indicators"("indicator_name") VALUES('Pain scale') RETURNING "indicator_name", "id";
+INSERT INTO "public"."indicators"("indicator_name") VALUES('Overall Condition') RETURNING "indicator_name", "id";
