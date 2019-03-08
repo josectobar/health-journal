@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import ReactQuill from 'react-quill'
 
 class Entry extends Component {
+
+    state = {
+
+    }
+
     render() {
         console.log(this.props)
         return (

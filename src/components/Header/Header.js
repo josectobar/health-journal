@@ -10,12 +10,14 @@ class Header extends Component {
 
     componentDidMount(){
         this.handleCurrent()
+        // window.onhashchange = () => {
+            // this.handleCurrent()
+        // }
     }
 
     handleCurrent = async () => {
-        if (this.props.pathname.includes('/day')) {
+        if (this.props.pathname !== "/") {
             const { id } = this.props
-            console.log(id)
             if (!id) {
                 try {
                     let verifySession = await axios.get('/auth/current')
@@ -27,9 +29,9 @@ class Header extends Component {
         }
     }
 
-    handleLogout =  () => {
-        axios.post('/auth/logout')
-        this.props.clearState()
+    handleLogout =  async () => {
+        await axios.post('/auth/logout')
+        await this.props.clearState()
         this.props.push('/')            
     }
 

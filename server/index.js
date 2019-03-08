@@ -15,7 +15,7 @@ const express = require('express'),
 
 //controllers:
     const authCtrl = require('./AuthController'),
-          entriesCtrl = require('./entriesController')
+          ctrl = require('./Controller')
       
 const app = express()
 
@@ -38,15 +38,21 @@ app.use(sessions({
 
 //links to db:
 massive(MASSIVE_CONNECTION)
-    .then(db => {
-        app.set('db', db)
+.then(db => {
+    app.set('db', db)
 
 //Sever connection:
-        app.listen(SERVER_PORT, () => console.log(`Live on port: ${SERVER_PORT}`))
-    })
+    app.listen(SERVER_PORT, () => console.log(`Live on port: ${SERVER_PORT}`))
+})
 
-//EndPoints:
+app.use(express.static(__dirname + './../build'))
+
+//EndPoints Auth:
 app.post('/auth/register', authCtrl.register)
 app.post('/auth/login', authCtrl.login)
 app.post('/auth/logout', authCtrl.logout)
 app.get('/auth/current', authCtrl.current)
+
+//EndPoints App:
+app.put('/api/wizard', ctrl.updateWizard)
+app.post('/api/indicators/:userid', ctrl.updateIndicators)

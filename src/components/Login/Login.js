@@ -29,6 +29,7 @@ class Login extends Component {
             }catch(err) {
             }
         } else {
+            console.log(this.props)
             this.props.history.push('/day/dashboard')
         }
     }

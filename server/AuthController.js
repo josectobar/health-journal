@@ -51,7 +51,6 @@ module.exports = {
     }, 
     current: (req, res) => {
         const { user } = req.session
-        console.log(user)
         if (user) {
             res.status(200).send(user)
         } else {
@@ -59,9 +58,8 @@ module.exports = {
         }
     },
     logout: (req, res) => {
-        
-        req.session.destroy()
-        console.log('hit logout', req.session);
-        res.sendStatus(200)
+        req.session.destroy(function(){
+            res.sendStatus(200)
+        })
     }
 }
