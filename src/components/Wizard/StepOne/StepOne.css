@@ -1,0 +1,13 @@
+.parent-container {
+    display: flex;
+    width: 100vw;
+    justify-content: space-around;
+}
+
+.single-toggle {
+    margin: 10px;
+}
+
+.single-box {
+    width: 25vw;
+}

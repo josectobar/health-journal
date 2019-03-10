@@ -51,7 +51,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = ( reduxState ) => {
-    const { name, id } = reduxState
+    const { name, id } = reduxState.reducer
     return {
         name,
         id

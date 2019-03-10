@@ -3,7 +3,6 @@ const initialState = {
     username: ``,
     name: ``,
     email: ``,
-    indicators:[],
     conditions: [],
     entries: [],
     wizard: true
@@ -12,6 +11,7 @@ const initialState = {
 const UPDATE_USER = 'UPDATE_USER'
 const UPDATE_WIZARD = 'UPDATE_WIZARD'
 const CLEAR_STATE = 'CLEAR_STATE'
+
 
 export function updateUser(user){
     return {

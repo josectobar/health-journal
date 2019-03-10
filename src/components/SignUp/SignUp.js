@@ -22,7 +22,7 @@ class Register extends Component {
 
     handleSignUp = async () => {
         const userSignUp = await axios.post('/auth/register', this.state)
-        this.props.updateUser(userSignUp.data)
+        this.props.updateUser(userSignUp.data[0])
         this.props.history.push('/wizard/stepone')
     }
 
