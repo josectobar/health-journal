@@ -56,3 +56,5 @@ app.get('/auth/current', authCtrl.current)
 //EndPoints App:
 app.put('/api/wizard', ctrl.updateWizard)
 app.post('/api/indicators/:userid', ctrl.updateIndicators)
+app.post('/api/entry', ctrl.postEntry)
+app.get('/api/entries', ctrl.getEntries)

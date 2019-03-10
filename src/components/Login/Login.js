@@ -35,6 +35,7 @@ class Login extends Component {
     }
 
     handleWizardDisplay = () => {
+        console.log('hit!', this.props.wizard)
         this.props.wizard ? 
                 this.props.history.push('/wizard/stepone')
             :
@@ -76,7 +77,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = ( reduxState ) => {
-    const { wizard, id } = reduxState
+    const { wizard, id } = reduxState.reducer
     return {
         wizard,
         id

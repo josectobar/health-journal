@@ -11,6 +11,7 @@ const initialState = {
 const UPDATE_USER = 'UPDATE_USER'
 const UPDATE_WIZARD = 'UPDATE_WIZARD'
 const CLEAR_STATE = 'CLEAR_STATE'
+const UPDATE_ENTRIES = 'UPDATE_ENTRIES'
 
 
 export function updateUser(user){
@@ -24,6 +25,13 @@ export function updateWizard(wizard){
     return {
         type: UPDATE_WIZARD,
         payload: wizard
+    }
+}
+
+export function updateEntries(entries){
+    return {
+        type: UPDATE_ENTRIES,
+        payload: entries
     }
 }
 
@@ -41,6 +49,9 @@ export default function reducer( state = initialState, action ) {
 
         case UPDATE_WIZARD:
             return {...state, wizard: payload }
+
+        case UPDATE_ENTRIES:
+            return {...state, entries: payload}
 
         case CLEAR_STATE:
             return {
