@@ -10,6 +10,7 @@ class Nav extends Component {
                 {this.props.pathname.includes('/day') &&
                     <>
                         <h1>Nav</h1>
+                        <Link to="/day/dashboard">Home</Link>
                         <Link to="/wizard/stepone">Wizard</Link>
                         <Link to="/day/new">New</Link>
                     </>

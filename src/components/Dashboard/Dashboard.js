@@ -17,20 +17,35 @@ class Dashboard extends Component {
         super()
 
         this.handleEntriesRequest = this.handleEntriesRequest.bind(this)
+        this.handleEntryView = this.handleEntryView.bind(this)
     }
 
     componentDidMount(){
         this.handleEntriesRequest()
     }
 
-    handleEntriesRequest(){
+    async handleEntriesRequest(){
         const { entries, updateEntries } = this.props
-        if (entries.length) {
-            
+        if (!entries.length) {
+           let entries = await axios.get('/api/entries')
+           updateEntries(entries.data)
         }
     }
 
+    handleEntryView(id){
+        this.props.history.push(`/day/entry/${id}`)
+    }
+
     render() {
+        const displayEntries = this.props.entries.map(entry => {
+            const {id, title, date} = entry
+            return (
+                <div key={id} onClick={() =>this.handleEntryView(id)}>
+                    <p>{title}</p>
+                    <p>{date}</p>
+                </div>
+            )
+        })
         return (
             <div>
                 <Switch>
@@ -40,7 +55,9 @@ class Dashboard extends Component {
                 <h1>Dashboard</h1>
                 <Stats/>
                 <Articles/>
-
+                <div>
+                    {displayEntries}
+                </div>
             </div>
         );
     }

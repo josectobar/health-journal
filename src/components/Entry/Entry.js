@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 //QuillJS: 
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
+import 'react-quill/dist/quill.bubble.css'
 
 
 class Entry extends Component {
@@ -18,13 +19,16 @@ class Entry extends Component {
         super()
         this.state = { 
             content:``,
-            title: ``
+            title: ``,
+            date:``
         }
         this.handleChange = this.handleChange.bind(this)
         this.hanldeTitleInput = this.hanldeTitleInput.bind(this)
         this.handleSave = this.handleSave.bind(this)
+        this.handleViewEntry = this.handleViewEntry.bind(this)
     }
 
+//Quill modules & format: 
     modules = {
         toolbar: [
             [{ 'size': ['small', false, 'large', 'huge'] }], 
@@ -37,13 +41,31 @@ class Entry extends Component {
           ['link', 'image'],
         ],
       }
-    
-      formats = [
+    formats = [
         'header',
         'bold', 'italic', 'underline', 'strike', 'blockquote',
         'list', 'bullet', 'indent',
         'link', 'image'
-      ]
+    ]
+//-------------------------
+    componentDidMount(){
+        this.handleViewEntry()
+    }
+
+    async handleViewEntry(){
+        const { id } = this.props.match.params
+        if (id) {
+            const getEntry = await axios.get(`/api/entry/${id}`)
+            const { title, content, date } = getEntry.data[0]
+            console.log(getEntry) 
+            this.setState({
+                title,
+                content,
+                date
+            })
+        }
+    }
+
     hanldeTitleInput(e){
         console.log(e.target.value)
         this.setState({
@@ -69,6 +91,7 @@ class Entry extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 {(this.props.location.pathname.includes('/new') || this.props.location.pathname.includes('/steptwo')) &&
@@ -87,7 +110,14 @@ class Entry extends Component {
                     </>
                 }
                 {this.props.location.pathname.includes('/entry') &&
-                    <h1>Entry</h1>
+                    <>
+                        <h1>Entry</h1>
+                        <h3>{this.state.title}</h3>
+                        <ReactQuill
+                            theme="bubble"
+                            value={this.state.content}
+                            readOnly={true}/>
+                    </>
                 }
             </div>
         );

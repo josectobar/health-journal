@@ -52,5 +52,16 @@ module.exports = {
         } catch (error) {
             console.log(`There was an error sending the entries: ${error}`)
         }
+    }, 
+    getEntry: async (req, res) => {
+        try { 
+            const db = req.app.get('db')
+            const { entryId } = req.params
+            const { id } = req.session.user
+            const entry = await db.entries.get_entry({ id:entryId, user_id:id })
+            res.status(200).send(entry)
+        } catch (error) {
+            console.log(` error getting entry: ${error}`)
+        }
     }
 }

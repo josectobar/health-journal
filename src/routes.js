@@ -14,6 +14,6 @@ export default (
         <Route path='/wizard' component={Wizard}/>
         <Route path='/day/entry/:id' component={Entry}/>
         <Route path='/day/new' component={Entry}/>
-        <Route path='/' component={Login}/>
+        <Route path='/' exact component={Login}/>
     </Switch>
 )
