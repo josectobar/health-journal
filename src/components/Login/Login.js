@@ -57,6 +57,7 @@ class Login extends Component {
             this.handleWizardDisplay()
         } catch (err) {
             console.log( err)
+            alert(`Incorrect username or password`)
         }
 
     }

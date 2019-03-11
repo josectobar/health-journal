@@ -42,8 +42,6 @@ module.exports = {
             } else {
                 res.status(401).send('incorrect password')
             }
-
-            
         } catch (err) {
             console.log('error logining in', err)
             res.sendStatus(500)
