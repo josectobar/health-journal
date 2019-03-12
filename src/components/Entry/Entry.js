@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
-import { dateGen } from '../../utils/dateGen'
+import DatePicker from 'react-datepicker'
 
 import axios from 'axios'
 
@@ -10,9 +9,13 @@ import { connect } from 'react-redux'
 
 //QuillJS: 
 import ReactQuill from 'react-quill'
+
+//Imported CSS for 3rd party libraries:
+//Quilljs
 import 'react-quill/dist/quill.snow.css'
 import 'react-quill/dist/quill.bubble.css'
-
+//Date-pickerjs:
+import "react-datepicker/dist/react-datepicker.css";
 
 class Entry extends Component {
     constructor(){
@@ -20,107 +23,61 @@ class Entry extends Component {
         this.state = { 
             content:``,
             title: ``,
-            date:``
+            date: new Date()
         }
-        this.handleChange = this.handleChange.bind(this)
-        this.hanldeTitleInput = this.hanldeTitleInput.bind(this)
-        this.handleSave = this.handleSave.bind(this)
         this.handleViewEntry = this.handleViewEntry.bind(this)
+        this.handleEdit = this.handleEdit.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
     }
 
-//Quill modules & format: 
-    modules = {
-        toolbar: [
-            [{ 'size': ['small', false, 'large', 'huge'] }], 
-          ['bold', 'italic', 'underline','strike', 'blockquote'],
-          [{ 'color': [] }, { 'background': [] }],       
-          [{ 'font': [] }],
-          [{ 'align': [] }],
-          ['clean'],
-          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-          ['link', 'image'],
-        ],
-      }
-    formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent',
-        'link', 'image'
-    ]
-//-------------------------
     componentDidMount(){
         this.handleViewEntry()
     }
 
     async handleViewEntry(){
-        const { id } = this.props.match.params
-        if (id) {
+        try {
+            const { id } = this.props.match.params
             const getEntry = await axios.get(`/api/entry/${id}`)
-            const { title, content, date } = getEntry.data[0]
-            console.log(getEntry) 
-            this.setState({
+            let { title, content, date } = getEntry.data[0]
+            date = new Date(date)
+            await this.setState({
                 title,
                 content,
                 date
             })
+        } catch (error) {
+            console.log(error)
         }
     }
 
-    hanldeTitleInput(e){
-        console.log(e.target.value)
-        this.setState({
-            title: e.target.value
-        })
+    handleEdit(){
+        const { id } = this.props.match.params
+        this.props.history.push(`/day/entry/compose/${id}`)
     }
 
-    handleChange(value){
-        this.setState({
-            content: value
-        })
-    }
-
-   async handleSave(){
-       const { title, content } = this.state
-       console.log(title);
-       
-        let updatePosts = await axios.post('/api/entry', {title, content, date:dateGen()})
-        console.log(updatePosts.data);
-        
-        this.props.updateEntries(updatePosts.data)
+    async handleDelete(){
+        const { id } = this.props.match.params
+        const updatedEntries = await axios.delete(`/api/entry/${id}`)
+        this.props.updateEntries(updatedEntries.data)
         this.props.history.push('/day/dashboard')
     }
 
     render() {
-        console.log(this.props)
         return (
             <div>
-                {(this.props.location.pathname.includes('/new') || this.props.location.pathname.includes('/steptwo')) &&
-                    <>
-                        <h1>New Entry</h1>
-                        <input type="text" onChange={this.hanldeTitleInput} placeholder="Enter a title"/>
-                        <ReactQuill
-                            theme="snow"
-                            modules={this.modules}
-                            format={this.format}
-                            value={this.state.content}
-                            placeholder='This is all I need'
-                            readOnly={false}
-                            onChange={this.handleChange}/>
-                        <button onClick={() => this.handleSave()}>Submit</button>
-                    </>
-                }
-                {this.props.location.pathname.includes('/entry') &&
-                    <>
-                        <h1>Entry</h1>
-                        <h3>{this.state.title}</h3>
-                        <ReactQuill
-                            theme="bubble"
-                            value={this.state.content}
-                            readOnly={true}/>
-                    </>
-                }
+                <h1>Entry</h1>
+                <h3>{this.state.title}</h3>
+                <button onClick={this.handleEdit}>Edit</button>
+                <button onClick={this.handleDelete}>Delete</button>
+                <DatePicker
+                    selected={this.state.date}
+                    disabled={true}/>
+                <ReactQuill
+                    theme="bubble"
+                    value={this.state.content}
+                    readOnly={true}/>
             </div>
-        );
+        )
     }
 }
 
@@ -128,5 +85,4 @@ const mapDispatchToProps = {
     updateEntries
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(Entry));
-
+export default connect(null, mapDispatchToProps)(Entry);

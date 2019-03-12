@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import Entry from '../../Entry/Entry'
+import Compose from '../../Entry/Compose'
 
 class StepTwo extends Component {
     render() {
         return (
             <div>
                 <h1>StepTwo</h1>
-                <Entry />
+                <Compose />
                 <Link to="/wizard/stepone">Back</Link>
             </div>
         );
     }
 }
 
-export default StepTwo;
+export default StepTwo

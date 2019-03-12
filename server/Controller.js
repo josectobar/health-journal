@@ -79,7 +79,7 @@ module.exports = {
         try {
             const db = req.app.get('db')
             const { entryid } = req.params
-            const { title, content, date } = req.body[0]
+            const { title, content, date } = req.body
             const { id } = req.session.user
             const entryEdit = await db.entries.update_entry({id:entryid, title, content, date, user_id:id})
             res.status(200).send(entryEdit)

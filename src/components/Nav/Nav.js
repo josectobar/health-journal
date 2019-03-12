@@ -12,7 +12,7 @@ class Nav extends Component {
                         <h1>Nav</h1>
                         <Link to="/day/dashboard">Home</Link>
                         <Link to="/wizard/stepone">Wizard</Link>
-                        <Link to="/day/new">New</Link>
+                        <Link to="/day/compose">Compose</Link>
                     </>
                 }
             </nav>
