@@ -13,7 +13,7 @@ import {
 } from "../../../ducks/indicatorsReducer";
 
 function Glucose(props) {
-  const { glucose_level, glucoseSwitch } = props;
+  const { glucose_level, updateIndicator, glucoseSwitch } = props;
 
   const glucoseDisp = (
     <Paper elevation={2}>
@@ -23,7 +23,7 @@ function Glucose(props) {
           placeholder="Enter glucose level"
           value={glucose_level}
           onChange={e =>
-            props.updateIndicator({ glucose_level: +e.target.value })
+            updateIndicator({ glucose_level: +e.target.value })
           }
         />
       </div>

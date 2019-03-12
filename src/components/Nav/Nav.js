@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
+import './Nav.scss'
+
+import Home from "@material-ui/icons/Home"
+import Edit from "@material-ui/icons/Edit"
+import School from "@material-ui/icons/School"
+
 
 class Nav extends Component {
 
     render() {
         return (
-            <nav>
+            <nav className="nav-container">
                 {this.props.pathname.includes('/day') &&
                     <>
                         <h1>Nav</h1>
-                        <Link to="/day/dashboard">Home</Link>
-                        <Link to="/wizard/stepone">Wizard</Link>
-                        <Link to="/day/compose">Compose</Link>
+                        <div className="button-wrap" onClick={() => this.props.history.push('/day/dashboard')}>
+                            <Home />
+                            <label>Home</label>
+                        </div>
+                        <div className="button-wrap" onClick={() => this.props.history.push('/day/compose')}>
+                            <Edit />
+                            <label>Compose</label>
+                        </div>
+                        <div className="button-wrap" onClick={() => this.props.history.push('/wizard/stepone')}>
+                            <School />
+                            <label>Wizard</label>
+                        </div>
                     </>
                 }
             </nav>

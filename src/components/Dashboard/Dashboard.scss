@@ -1,0 +1,9 @@
+@import '../../variables.scss';
+
+.dashboard-container {
+    background-color: $light-blue;
+    display: flex;
+    justify-content: space-between;
+    padding: 10em;
+    height: 55vh;
+}

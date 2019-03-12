@@ -9,6 +9,7 @@ class StepTwo extends Component {
                 <h1>StepTwo</h1>
                 <Compose />
                 <Link to="/wizard/stepone">Back</Link>
+                <button>Finsh</button>
             </div>
         );
     }

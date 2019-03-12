@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./Dashboard.scss";
 
 import axios from "axios";
 
@@ -6,7 +7,7 @@ import axios from "axios";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import MoreVertIcon from "@material-ui/icons/MoreVert"
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 //Redux:
 import { connect } from "react-redux";
@@ -18,11 +19,7 @@ import Stats from "./Stats/Stats";
 import Articles from "./Articles/Articles";
 
 // --------------------------- Material UI --------------------------------
-const options = [
-    "Edit",
-    "View",
-    "Delete"
-];
+const options = ["Edit", "View", "Delete"];
 
 const ITEM_HEIGHT = 48;
 
@@ -32,7 +29,8 @@ class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      anchorEl: null
+      anchorEl: null,
+      id: 0
     };
 
     this.handleEntriesRequest = this.handleEntriesRequest.bind(this);
@@ -55,79 +53,86 @@ class Dashboard extends Component {
     this.props.history.push(`/day/entry/${id}`);
   }
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  }
+  handleClick = (event, id) => {
+    this.setState({ anchorEl: event.currentTarget, id });
+  };
 
-  handleClose = (props) => {
-        console.log(props)
-    // option === 'Delete'
-    // ?
-    //     this.handleDelete(id)
-    // :
-    //     option === 'Edit' 
-    // ?
-    //  this.handleEdit(id)
-    //  :
-    //  console.log('View')
-    this.setState({ anchorEl: null });
-  }
+  handleClose = option => {
+    const { id } = this.state;
+    console.log(`this console:`, id);
+    option === "Delete"
+      ? this.handleDelete(id)
+      : option === "Edit"
+      ? this.handleEdit(id)
+      : console.log("View");
+    this.setState({ anchorEl: null, id: 0 });
+  };
 
-  handleDelete = async (id) => {
-    let updatedEntries = await axios.delete(`/api/entry/${id}`)
-    updateEntries(updatedEntries.data)
-  }
+  handleDelete = async id => {
+    let updatedEntries = await axios.delete(`/api/entry/${id}`);
+    console.log(updatedEntries);
+    this.props.updateEntries(updatedEntries.data);
+  };
 
-  handleEdit = (id) => {
-      this.props.history.push(`/day/entry/compose/${id}`)
-  }
+  handleEdit = id => {
+    this.props.history.push(`/day/entry/compose/${id}`);
+  };
 
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
-    const displayEntries = this.props.entries.map(entry => {
+    const displayEntries = this.props.entries.map((entry, index) => {
       const { id, title } = entry;
       let { date } = entry;
+      const test = id;
       date = new Date(date);
       date = date.toLocaleDateString();
-      console.log(id)
       return (
-        <div key={id} >
-            <div onClick={() => this.handleEntryView(id)}>
-                <p>{title}</p>
-                <p>{date}</p>
-            </div>
-        {/* -------------------------------------Material UI --------------------------------- */}
+        <div key={index}>
+          <div onClick={() => this.handleEntryView(id)}>
+            <p>{title}</p>
+            <p>{date}</p>
+          </div>
+          <button onClick={() => console.log({ test })}>click me</button>
+          {/* -------------------------------------Material UI --------------------------------- */}
+          <div>
             <IconButton
-            aria-label="More"
-            aria-owns={open ? "long-menu" : undefined}
-            aria-haspopup="true"
-            onClick={this.handleClick}
+              aria-label="More"
+              aria-owns={open ? "long-menu" : undefined}
+              aria-haspopup="true"
+              onClick={event => this.handleClick(event, id)}
             >
-            <MoreVertIcon />
+              <MoreVertIcon />
             </IconButton>
             <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={this.handleClose}
-            PaperProps={{
+              anchorEl={anchorEl}
+              open={open}
+              id="render-props-menu"
+              onClose={this.handleClose}
+              PaperProps={{
                 style: {
-                    maxHeight: ITEM_HEIGHT * 4.5,
-                    width: 200
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                  width: 200
                 }
-            }}
+              }}
             >
-            <Option name={id} key={'Edit'} option={'Edit'} id={id} handleClose={this.handleClose}/>
-            {/* {options.map(option => {
-                console.log(id)
-                return <Option key={option} option={option} id={id} handleClose={this.handleClose}/>
-            })} */}
+              {options.map(option => {
+                return (
+                  <MenuItem
+                    key={option}
+                    selected={option === "Edit"}
+                    onClick={() => this.handleClose(option)}
+                  >
+                    {option}
+                  </MenuItem>
+                );
+              })}
             </Menu>
-        {/* -------------------------------------Material UI --------------------------------- */}
+          </div>
+          {/* -------------------------------------Material UI --------------------------------- */}
         </div>
-      )
-    })
+      );
+    });
     return (
       <div>
         <Switch>
@@ -149,20 +154,6 @@ const mapStateToProps = reduxState => {
     entries
   };
 };
-
-const Option = (props) => {
-    console.log(props)
-    return (
-        <MenuItem
-                selected={props.option === "Edit"}
-                
-                onClick={() => props.handleClose(props)}
-                >
-                {props.option}
-        </MenuItem>
-    )
-}
-
 
 const dispatchToProps = {
   updateEntries

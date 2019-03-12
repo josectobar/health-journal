@@ -25,26 +25,27 @@ const styles = {
 };
 
 class PainScale extends Component {
-
     state = {
-      value: 3,
+      value: 0,
     }
 
+    handleChange = (event, value) => {
+      this.setState({ value });
+    }  
     
     render(){
       const { pain_scale, painSwitch, updateIndicator, updateSwitch } = this.props
       const painScaleDisp = (
           <Paper elevation={2}>
             <div>
-              <input
-                type="text"
-                placeholder="Pain Level"
+              <Slider
+                // classes={{ container: classes.slider }}
                 value={pain_scale}
-                onChange={e =>
-                  updateIndicator({ pain_scale: e.target.value })
-                }
+                min={0}
+                max={10}
+                step={1}
+                onChange={(event, value) => updateIndicator({pain_scale: value})}
               />
-    
             </div>
           </Paper>
       );

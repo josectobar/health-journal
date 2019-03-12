@@ -62,7 +62,6 @@ class Compose extends Component {
     }
 
     async handleEdit(){
-        console.log(this.props.match.params.id)
         if (this.props.match.params.id) {
             try {
                 const { id } = this.props.match.params

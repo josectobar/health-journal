@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './Header.scss'
 //redux:
 import { connect } from 'react-redux'
 import { updateUser, clearState } from '../../ducks/reducer'
@@ -37,10 +37,9 @@ class Header extends Component {
 
     render() {
         return (
-            <header>
+            <header className="header-container">
                 {this.props.pathname.includes('/day') &&
                     <>
-                        <h1>Header</h1>
                         <h2>Hello {this.props.name}!</h2>
                         <button onClick={this.handleLogout}>Logout</button>
                     </>
