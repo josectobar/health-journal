@@ -1,0 +1,96 @@
+@import '../../variables.scss';
+
+
+/*-------------- General -------------------*/
+
+
+* {
+    box-sizing: border-box;
+  }
+
+
+  .input-effect {
+    background-color: rgb(240, 242, 247);
+    margin: 10px auto;
+    width: 250px;
+    height: 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 6px;
+    padding: 5px;
+    box-shadow: -2px 4px 7px .8px rgb(223, 223, 223)
+  }
+
+
+/*-------------- login.js -------------------*/
+
+
+
+/*-------------- Dashboard.js -------------------*/
+
+.dashboard-container {
+    background-color: $light-blue;
+    display: flex;
+    justify-content: space-between;
+    
+    padding: 10em;
+    height: 55vh;
+        .entry-list-main {
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items: flex-end;
+            width: 30%;
+            .entry-list-container {
+                display: flex;
+                align-items: flex-end;
+                .entry-list-map {
+                    display: flex;
+                }
+            }
+        }
+}
+
+
+/*-------------- Compose.js -----------------*/
+
+.title{
+    width: 40em;
+}
+.compose-text-date {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+
+    input {
+        margin: 3em;
+        width: 30em;   
+    }
+    #datepicker {
+        width: 10em;
+    }
+}
+.quill-btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 70%;
+    height: 40em;
+    margin: 0 auto;
+    .quill {
+        height: 30em;
+    }
+    .compose-btn {
+        width: 10em;
+        padding: 1em;
+        margin: 4em auto;
+    }
+}
+
+
+/*-------------- Wizard.js -----------------*/
+
+
+.wizard-datepicker {
+    width: 7em;
+}

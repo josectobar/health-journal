@@ -8,30 +8,37 @@ import {
 
 function OverallCondition(props) {
 
+  const handleInput = (value) => {
+    const {date, id} = props
+    console.log(props);
+    
+    props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: value, date}})
+  }
+
   const overallConditionDisp = (
       <div>
         <div
-            onClick={() => props.updateIndicator({ overall_condition: 5 })}
+            onClick={() => handleInput(5)}
           >
             <h5>Excelent</h5>
           </div>
           <div
-            onClick={() => props.updateIndicator({ overall_condition: 4 })}
+            onClick={() => handleInput(4)}
           >
             <h5>Good</h5>
           </div>
           <div
-            onClick={() => props.updateIndicator({ overall_condition: 3 })}
+            onClick={() => handleInput(3)}
           >
             <h5>Normal</h5>
           </div>
           <div
-            onClick={() => props.updateIndicator({ overall_condition: 2 })}
+            onClick={() => handleInput(2)}
           >
             <h5>I've been better</h5>
           </div>
           <div
-            onClick={() => props.updateIndicator({ overall_condition: 1 })}
+            onClick={() => handleInput(1)}
           >
             <h5>Don't ask...</h5>
           </div>
@@ -46,11 +53,21 @@ function OverallCondition(props) {
   );
 }
 
+const mapStateToProps = (reduxState) => {
+  const { overall_condition, date} = reduxState.indicatorsReducer
+  const { id } = reduxState.reducer
+  return {
+    id,
+    overall_condition,
+    date
+  }
+}
+
 const mapDispatchToProps = {
   updateIndicator
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(OverallCondition);

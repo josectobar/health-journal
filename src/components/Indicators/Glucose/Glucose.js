@@ -13,7 +13,7 @@ import {
 } from "../../../ducks/indicatorsReducer";
 
 function Glucose(props) {
-  const { glucose_level, updateIndicator, glucoseSwitch } = props;
+  const { id, date, glucose_level, updateIndicator, glucoseSwitch } = props;
 
   const glucoseDisp = (
     <Paper elevation={2}>
@@ -21,9 +21,9 @@ function Glucose(props) {
         <input
           type="text"
           placeholder="Enter glucose level"
-          value={glucose_level}
+          value={glucose_level.reading}
           onChange={e =>
-            updateIndicator({ glucose_level: +e.target.value })
+            updateIndicator({glucose_level:{user_id:id, indicator_id: 1, reading: +e.target.value, date}})
           }
         />
       </div>
@@ -50,8 +50,11 @@ function Glucose(props) {
 }
 
 const mapStateToProps = reduxState => {
-  const { glucose_level, glucoseSwitch } = reduxState.indicatorsReducer;
+  const { date, glucose_level, glucoseSwitch } = reduxState.indicatorsReducer
+  const { id } = reduxState.reducer
   return {
+    date,
+    id,
     glucose_level,
     glucoseSwitch
   };

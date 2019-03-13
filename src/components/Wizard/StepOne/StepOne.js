@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import "./StepOne.css";
 
+import { connect } from 'react-redux'
+
 //Components:
 import Glucose from '../../Indicators/Glucose/Glucose'
 import PainScale from '../../Indicators/PainScale/PainScale'
@@ -27,4 +29,8 @@ class StepOne extends Component {
   }
 }
 
-export default StepOne;
+const DispatchToProps = {
+  
+}
+
+export default connect(null, DispatchToProps)(StepOne);

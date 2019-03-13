@@ -7,7 +7,8 @@ import axios from "axios";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import MoreVertIcon from "@material-ui/icons/MoreVert"
+import Paper from "@material-ui/core/Paper";
 
 //Redux:
 import { connect } from "react-redux";
@@ -57,21 +58,22 @@ class Dashboard extends Component {
     this.setState({ anchorEl: event.currentTarget, id });
   };
 
-  handleClose = option => {
+  handleSelect = option => {
     const { id } = this.state;
-    console.log(`this console:`, id);
-    option === "Delete"
+      option === "Delete"
       ? this.handleDelete(id)
       : option === "Edit"
-      ? this.handleEdit(id)
-      : console.log("View");
-    this.setState({ anchorEl: null, id: 0 });
-  };
+      ? this.props.history.push(`/day/entry/compose/${id}`)
+      : option === "View"
+      ? this.props.history.push(`/day/entry/${id}`)
+      : this.setState({ anchorEl: null, id: 0 });
+    
+  }
 
   handleDelete = async id => {
-    let updatedEntries = await axios.delete(`/api/entry/${id}`);
-    console.log(updatedEntries);
-    this.props.updateEntries(updatedEntries.data);
+    let updatedEntries = await axios.delete(`/api/entry/${id}`)
+    this.props.updateEntries(updatedEntries.data)
+    this.setState({ anchorEl: null, id: 0 });
   };
 
   handleEdit = id => {
@@ -84,57 +86,58 @@ class Dashboard extends Component {
     const displayEntries = this.props.entries.map((entry, index) => {
       const { id, title } = entry;
       let { date } = entry;
-      const test = id;
       date = new Date(date);
       date = date.toLocaleDateString();
       return (
-        <div key={index}>
-          <div onClick={() => this.handleEntryView(id)}>
+        <div className="entry-list-container" key={index}>
+          <div
+            className="entry-list-map"
+            onClick={() => this.handleEntryView(id)}
+            >
             <p>{title}</p>
             <p>{date}</p>
-          </div>
-          <button onClick={() => console.log({ test })}>click me</button>
-          {/* -------------------------------------Material UI --------------------------------- */}
-          <div>
-            <IconButton
-              aria-label="More"
-              aria-owns={open ? "long-menu" : undefined}
-              aria-haspopup="true"
-              onClick={event => this.handleClick(event, id)}
-            >
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={open}
-              id="render-props-menu"
-              onClose={this.handleClose}
-              PaperProps={{
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: 200
-                }
-              }}
-            >
-              {options.map(option => {
-                return (
-                  <MenuItem
-                    key={option}
-                    selected={option === "Edit"}
-                    onClick={() => this.handleClose(option)}
-                  >
-                    {option}
-                  </MenuItem>
-                );
-              })}
-            </Menu>
-          </div>
+            </div>
+            {/* -------------------------------------Material UI --------------------------------- */}
+            <div>
+              <IconButton
+                aria-label="More"
+                aria-owns={open ? "long-menu" : undefined}
+                aria-haspopup="true"
+                onClick={event => this.handleClick(event, id)}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={open}
+                id="long-menu"
+                onClose={this.handleSelect}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: 200
+                  }
+                }}
+              >
+                {options.map(option => {
+                  return (
+                    <MenuItem
+                      key={option}
+                      selected={option === "Edit"}
+                      onClick={() => this.handleSelect(option)}
+                    >
+                      {option}
+                    </MenuItem>
+                  );
+                })}
+              </Menu>
+            </div>
           {/* -------------------------------------Material UI --------------------------------- */}
         </div>
       );
     });
     return (
-      <div>
+      <div className="dashboard-container">
         <Switch>
           <Route path="/day/dashboard/stats" component={Stats} />
           <Route path="/day/dashboard/articles" component={Articles} />
@@ -142,7 +145,9 @@ class Dashboard extends Component {
         <h1>Dashboard</h1>
         <Stats />
         <Articles />
-        {displayEntries}
+        <Paper elevation={4} className="entry-list-main">
+          {displayEntries}
+        </Paper>
       </div>
     );
   }

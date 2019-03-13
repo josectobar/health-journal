@@ -16,7 +16,9 @@ function BloodPressure(props) {
   const {
     blood_pressure_systolic,
     blood_pressure_diastolic,
-    bloodPresureSwitch
+    bloodPresureSwitch,
+    id,
+    date
   } = props;
 
   const BloodPressureDisp = (
@@ -30,17 +32,17 @@ function BloodPressure(props) {
       >
         <input
           type="text"
-          value={blood_pressure_systolic}
+          value={blood_pressure_systolic.reading}
           onChange={e =>
-            props.updateIndicator({ blood_pressure_systolic: +e.target.value })
+            props.updateIndicator({blood_pressure_systolic:{user_id:id, indicator_id: 2, reading: +e.target.value, date}})
           }
         />
         <h4>/</h4>
         <input
           type="text"
-          value={blood_pressure_diastolic}
+          value={blood_pressure_diastolic.reading}
           onChange={e =>
-            props.updateIndicator({ blood_pressure_diastolic: +e.target.value })
+            props.updateIndicator({blood_pressure_diastolic:{user_id:id, indicator_id: 3, reading: +e.target.value, date}})
           }
         />
       </div>
@@ -71,9 +73,13 @@ const mapStateToProps = reduxState => {
   const {
     blood_pressure_systolic,
     blood_pressure_diastolic,
-    bloodPresureSwitch
+    bloodPresureSwitch,
+    date
   } = reduxState.indicatorsReducer;
+  const { id } = reduxState.reducer
   return {
+    date,
+    id,
     blood_pressure_systolic,
     blood_pressure_diastolic,
     bloodPresureSwitch

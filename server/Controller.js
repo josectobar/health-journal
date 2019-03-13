@@ -10,17 +10,17 @@ module.exports = {
         try {
             const db = req.app.get('db')
             const { body } = req
-            const { userid } = req.params
+            console.log(typeof body, body)
+            const { id } = req.session.user
             body.map(async (indicator) => {
                 try {
-                    const { user_id, indicator_id, reading, date } = indicator
-                    return await db.indicators.update_indicators({user_id, indicator_id, reading, date}) 
-
+                    const { indicator_id, reading, date } = indicator
+                    return await db.indicators.update_indicators({user_id: id, indicator_id, reading, date}) 
                 } catch (error) {
                     console.log(error)
                 }
             })
-            let getIndicators = await db.indicators.get_indicators({userid})
+            let getIndicators = await db.indicators.get_indicators({user_id: id})
             res.status(200).send(getIndicators)
         } catch (error) {
             console.log(`Error updating indicators ${error}`)

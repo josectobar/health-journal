@@ -67,8 +67,10 @@ class Login extends Component {
             <div>
                 <h1>Login</h1>
                 <input 
+                    className="input-effect"
                     type="text" name="username" onChange={this.handleInput} value={this.state.username} placeholder="Username"/>
                 <input 
+                    className="input-effect"
                     type="Password" name="password" onChange={this.handleInput} value={this.state.password} placeholder="Password"/>
                 <button onClick={this.handleLogin}>Login</button>
                 <Link to="/signup">Not a user?</Link>

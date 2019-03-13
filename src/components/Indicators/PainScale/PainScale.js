@@ -34,17 +34,17 @@ class PainScale extends Component {
     }  
     
     render(){
-      const { pain_scale, painSwitch, updateIndicator, updateSwitch } = this.props
+      const { id, date, pain_scale, painSwitch, updateIndicator, updateSwitch } = this.props
       const painScaleDisp = (
           <Paper elevation={2}>
             <div>
               <Slider
                 // classes={{ container: classes.slider }}
-                value={pain_scale}
+                value={pain_scale.reading}
                 min={0}
                 max={10}
                 step={1}
-                onChange={(event, value) => updateIndicator({pain_scale: value})}
+                onChange={(event, value) => updateIndicator({pain_scale:{user_id:id, indicator_id: 4, reading: value, date}})}
               />
             </div>
           </Paper>
@@ -70,8 +70,11 @@ class PainScale extends Component {
 }
 
 const mapStateToProps = reduxState => {
-  const { pain_scale, painSwitch } = reduxState.indicatorsReducer;
+  const { date, pain_scale, painSwitch } = reduxState.indicatorsReducer;
+  const { id } = reduxState.reducer
   return {
+    id,
+    date,
     pain_scale,
     painSwitch
   };
