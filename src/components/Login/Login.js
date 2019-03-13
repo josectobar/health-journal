@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { updateUser } from '../../ducks/reducer'
+import Paper from "@material-ui/core/Paper";
 
 import axios from 'axios'
 
@@ -64,17 +65,28 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
+            <Paper elevation={1} className="login-main">
                 <h1>Login</h1>
                 <input 
                     className="input-effect"
-                    type="text" name="username" onChange={this.handleInput} value={this.state.username} placeholder="Username"/>
+                    type="text" 
+                    name="username" 
+                    onChange={this.handleInput} 
+                    value={this.state.username} 
+                    placeholder="Username"/>
                 <input 
                     className="input-effect"
-                    type="Password" name="password" onChange={this.handleInput} value={this.state.password} placeholder="Password"/>
-                <button onClick={this.handleLogin}>Login</button>
+                    type="Password" 
+                    name="password" 
+                    onChange={this.handleInput} 
+                    value={this.state.password} 
+                    placeholder="Password"/>
+                <button 
+                    onClick={this.handleLogin}>
+                    Login
+                </button>
                 <Link to="/signup">Not a user?</Link>
-            </div>
+            </Paper>
         );
     }
 }

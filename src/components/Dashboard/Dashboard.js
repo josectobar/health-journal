@@ -31,7 +31,8 @@ class Dashboard extends Component {
     super();
     this.state = {
       anchorEl: null,
-      id: 0
+      id: 0,
+      index: -1
     };
 
     this.handleEntriesRequest = this.handleEntriesRequest.bind(this);
@@ -54,26 +55,30 @@ class Dashboard extends Component {
     this.props.history.push(`/day/entry/${id}`);
   }
 
-  handleClick = (event, id) => {
-    this.setState({ anchorEl: event.currentTarget, id });
+  handleClick = (event, id, index) => {
+    this.setState({ anchorEl: event.currentTarget, id, index });
   };
 
   handleSelect = option => {
-    const { id } = this.state;
+    const { id, index } = this.state;
       option === "Delete"
-      ? this.handleDelete(id)
+      ? this.handleDelete(id, index)
       : option === "Edit"
       ? this.props.history.push(`/day/entry/compose/${id}`)
       : option === "View"
       ? this.props.history.push(`/day/entry/${id}`)
-      : this.setState({ anchorEl: null, id: 0 });
+      : this.setState({ anchorEl: null, id: 0, index:-1 });
     
   }
 
-  handleDelete = async id => {
+  handleDelete = async (id, index) => {
+    let { updateEntries, entries } = this.props
+    entries.splice(index, 1)
+    console.log(entries)
+    await updateEntries(entries)
     let updatedEntries = await axios.delete(`/api/entry/${id}`)
-    this.props.updateEntries(updatedEntries.data)
-    this.setState({ anchorEl: null, id: 0 });
+    updateEntries(updatedEntries.data)
+    this.setState({ anchorEl: null, id: 0, index: -1 });
   };
 
   handleEdit = id => {
@@ -103,7 +108,7 @@ class Dashboard extends Component {
                 aria-label="More"
                 aria-owns={open ? "long-menu" : undefined}
                 aria-haspopup="true"
-                onClick={event => this.handleClick(event, id)}
+                onClick={event => this.handleClick(event, id, index)}
               >
                 <MoreVertIcon />
               </IconButton>

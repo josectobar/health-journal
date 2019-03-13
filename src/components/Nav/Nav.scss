@@ -1,12 +1,3 @@
 @import '../../variables.scss';
+@import '../../base.scss';
 
-.nav-container {
-    background-color: $darkest-blue;
-    display: flex;
-    flex-direction: column;
-    color: white;
-    position: fixed;
-    // top: 0;
-    left: 0;
-    height: 100vh;
-}

@@ -6,7 +6,7 @@ import "./Compose.scss";
 import axios from "axios";
 
 //Redux:
-import { updateEntries } from "../../ducks/reducer";
+import { updateEntries, updateEntry, clearEntry } from "../../ducks/reducer";
 import { connect } from "react-redux";
 
 //Routing:
@@ -73,7 +73,8 @@ class Compose extends Component {
     "link",
     "image"
   ];
-  //-------------------------
+  //----------------------------------------------------------
+
   componentDidMount() {
     this.handleEdit();
   }
@@ -85,7 +86,7 @@ class Compose extends Component {
         const getEntry = await axios.get(`/api/entry/${id}`);
         let { title, content, date } = getEntry.data[0];
         date = new Date(date);
-        await this.setState({
+        await this.updateEntry({
           title,
           content,
           date
@@ -115,9 +116,10 @@ class Compose extends Component {
   }
 
   async handleSave() {
-    const { title, content, date } = this.state;
+    const { title, content, date } = this.props.entry;
     let updatedPosts = await axios.post("/api/entry", { title, content, date });
     this.props.updateEntries(updatedPosts.data);
+    this.props.clearEntry();
     this.props.history.push("/day/dashboard");
   }
 
@@ -134,6 +136,7 @@ class Compose extends Component {
   }
 
   render() {
+    const { updateEntry, entry } = this.props;
     return (
       <div>
         {this.props.location.pathname === "/day/compose" ? (
@@ -145,18 +148,18 @@ class Compose extends Component {
           <input
             className="title input-effect"
             type="text"
-            onChange={this.handleTitleInput}
-            value={this.state.title}
+            onChange={e => updateEntry({ title: e.target.value })}
+            value={entry.title}
             placeholder="Enter a title"
           />
-          {this.props.location.pathname !== "/wizard/steptwo" &&
+          {this.props.location.pathname !== "/wizard/steptwo" && (
             <DatePicker
-                className="input-effect"
-                id="datepicker"
-                selected={this.state.date}
-                onChange={this.handleDateInput}
+              className="input-effect"
+              id="datepicker"
+              selected={entry.date}
+              onChange={value => updateEntry({ date: value })}
             />
-          }
+          )}
         </div>
         <div className="quill-btn-container">
           <ReactQuill
@@ -164,15 +167,19 @@ class Compose extends Component {
             theme="snow"
             modules={this.modules}
             format={this.format}
-            value={this.state.content}
+            value={entry.content}
             placeholder="This is all I need"
             readOnly={false}
-            onChange={this.handleChange}
+            onChange={delta => updateEntry({ content: delta })}
           />
           {this.props.location.pathname === "/day/compose" ? (
-            <button className="compose-btn"onClick={() => this.handleSave()}>Submit</button>
+            <button className="compose-btn" onClick={() => this.handleSave()}>
+              Submit
+            </button>
           ) : this.props.location.pathname === "/wizard/steptwo" ? null : (
-            <button className="compose-btn" onClick={this.handleEntryUpdate}>Save Changes</button>
+            <button className="compose-btn" onClick={this.handleEntryUpdate}>
+              Save Changes
+            </button>
           )}
         </div>
       </div>
@@ -180,13 +187,22 @@ class Compose extends Component {
   }
 }
 
+const mapStateToProps = reduxState => {
+  const { entry } = reduxState.reducer;
+  return {
+    entry
+  };
+};
+
 const mapDispatchToProps = {
-  updateEntries
+  updateEntries,
+  updateEntry,
+  clearEntry
 };
 
 export default withRouter(
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(Compose)
 );

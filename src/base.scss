@@ -24,7 +24,39 @@
 
 /*-------------- login.js -------------------*/
 
+  .login-main {
+      display: flex;
+      flex-direction: column;
+      width: 30em;
+      height: 20em;
+      padding: 2em;
+      margin: 15em auto;
+      button {
+          width: 10em;
+          margin: 2em auto;
+      }
+  }
 
+/*-------------- Nav.js -------------------*/
+
+.nav-container {
+    background-color: $darkest-blue;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    position: fixed;
+    // top: 0;
+    left: 0;
+    height: 100vh;
+}
+
+/*-------------- Header.js -------------------*/
+
+.header-container {
+    background-color: $dark-blue;
+    display: flex;
+    justify-content: space-around;
+}
 
 /*-------------- Dashboard.js -------------------*/
 
@@ -34,11 +66,10 @@
     justify-content: space-between;
     
     padding: 10em;
-    height: 55vh;
         .entry-list-main {
             display: flex;
             flex-direction: column;
-            justify-content: end;
+            // justify-content: end;
             align-items: flex-end;
             width: 30%;
             .entry-list-container {
