@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import "./StepOne.css";
+//SASS:
+import "./Stepone.scss"
 
 //redux:
 import { connect } from 'react-redux'
@@ -19,8 +20,9 @@ class StepOne extends Component {
 
   render() {
     return (
-      <div>
-        <h1>StepOne</h1>
+      <>
+      <h1>StepOne</h1>
+      <div className="step-one-main">
         <Paper className="overall-condition-container" elevation={1}>
           <OverallCondition/>
         </Paper>
@@ -29,8 +31,9 @@ class StepOne extends Component {
           <Glucose />
           <BloodPressure/>
         </div>
-        <Link to="/wizard/steptwo">Next</Link>
       </div>
+        <Link to="/wizard/steptwo">Next</Link>
+        </>
     )
   }
 }

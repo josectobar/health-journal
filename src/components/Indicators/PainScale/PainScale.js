@@ -36,9 +36,17 @@ class PainScale extends Component {
     render(){
       const { id, date, pain_scale, painSwitch, updateIndicator, updateSwitch } = this.props
       const painScaleDisp = (
-          <Paper elevation={2}>
+          <Paper 
+            className="paper-container"
+            elevation={2}>
             <div>
+              <input
+                className="slider-input input-effect"
+                value={pain_scale.reading}
+                type="number" 
+                disabled="true"/>
               <Slider
+                className="slider"
                 // classes={{ container: classes.slider }}
                 value={pain_scale.reading}
                 min={0}

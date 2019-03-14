@@ -16,12 +16,16 @@ function Glucose(props) {
   const { id, date, glucose_level, updateIndicator, glucoseSwitch } = props;
 
   const glucoseDisp = (
-    <Paper elevation={2}>
+    <Paper 
+      className="paper-container"
+      elevation={2}>
       <div>
         <input
+          className="glucose-input input-effect"
           type="text"
-          placeholder="Enter glucose level"
+          placeholder="Glucose"
           value={glucose_level.reading}
+          onClick={e => e.target.value=''}
           onChange={e =>
             updateIndicator({glucose_level:{user_id:id, indicator_id: 1, reading: +e.target.value, date}})
           }

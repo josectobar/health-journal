@@ -22,25 +22,34 @@ function BloodPressure(props) {
   } = props;
 
   const BloodPressureDisp = (
-    <Paper elevation={2}>
-      <div
+    <Paper 
+      className="paper-container"
+      elevation={2}>
+      <div 
+        className="input-container"
         style={{
           display: "flex",
           padding: "15px",
-          justifyContent: "space-around"
+          justifyContent: "center"
         }}
       >
         <input
+          className="blood-pressure-input input-effect"
           type="text"
           value={blood_pressure_systolic.reading}
+          placeholder="0"
+          onClick={e => e.target.value=''}
           onChange={e =>
             props.updateIndicator({blood_pressure_systolic:{user_id:id, indicator_id: 2, reading: +e.target.value, date}})
           }
         />
         <h4>/</h4>
         <input
+          className="blood-pressure-input input-effect"
           type="text"
           value={blood_pressure_diastolic.reading}
+          placeholder="0"
+          onClick={e => e.target.value=''}
           onChange={e =>
             props.updateIndicator({blood_pressure_diastolic:{user_id:id, indicator_id: 3, reading: +e.target.value, date}})
           }
