@@ -10,7 +10,6 @@ module.exports = {
         try {
             const db = req.app.get('db')
             const { body } = req
-            console.log(typeof body, body)
             const { id } = req.session.user
             body.map(async (indicator) => {
                 try {
@@ -28,8 +27,8 @@ module.exports = {
     },
     getIndicators: async (req, res) => {
         const db = req.app.get('db')
-        const { id } = req.body
-        const getIndicators = await db.indicators.get_indicators({id})
+        const { id } = req.session.user
+        const getIndicators = await db.indicators.get_indicators({user_id:id})
         res.status(200).send(getIndicators)
     },
     postEntry: async (req, res) => {

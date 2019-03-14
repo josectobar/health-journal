@@ -3,6 +3,9 @@ import "./Dashboard.scss";
 
 import axios from "axios";
 
+//lodash:
+import _ from 'lodash/fp'
+
 //materialUI:
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
@@ -13,7 +16,7 @@ import Paper from "@material-ui/core/Paper";
 //Redux:
 import { connect } from "react-redux";
 import { updateEntries } from "../../ducks/reducer";
-
+import { updateIndicators } from "../../ducks/indicatorsReducer"
 //Routes:
 import { Switch, Route } from "react-router-dom";
 import Stats from "./Stats/Stats";
@@ -35,19 +38,28 @@ class Dashboard extends Component {
       index: -1
     };
 
-    this.handleEntriesRequest = this.handleEntriesRequest.bind(this);
+    this.handleDataRequest = this.handleDataRequest.bind(this);
     this.handleEntryView = this.handleEntryView.bind(this);
   }
 
   componentDidMount() {
-    this.handleEntriesRequest();
+    this.handleDataRequest();
   }
 
-  async handleEntriesRequest() {
-    const { entries, updateEntries } = this.props;
-    if (!entries.length) {
-      let entries = await axios.get("/api/entries");
-      updateEntries(entries.data);
+  async handleDataRequest() {
+    try {
+      const { indicators, entries, updateEntries, updateIndicators } = this.props;
+      if (!entries.length) {
+        let entries = await axios.get("/api/entries");
+        updateEntries(entries.data);
+      }
+      if (_.isEmpty(indicators)) {
+        let dbIndicators = await axios.get("/api/indicators")
+        console.log(typeof dbIndicators.data, dbIndicators.data)
+        updateIndicators(dbIndicators.data)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -74,8 +86,7 @@ class Dashboard extends Component {
   handleDelete = async (id, index) => {
     let { updateEntries, entries } = this.props
     entries.splice(index, 1)
-    console.log(entries)
-    await updateEntries(entries)
+    updateEntries(entries)
     let updatedEntries = await axios.delete(`/api/entry/${id}`)
     updateEntries(updatedEntries.data)
     this.setState({ anchorEl: null, id: 0, index: -1 });
@@ -148,7 +159,11 @@ class Dashboard extends Component {
           <Route path="/day/dashboard/articles" component={Articles} />
         </Switch>
         <h1>Dashboard</h1>
-        <Stats />
+        <Paper 
+          className="stats-main"
+          elevation={4}>
+          <Stats />
+        </Paper>
         <Articles />
         <Paper elevation={4} className="entry-list-main">
           {displayEntries}
@@ -159,14 +174,17 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = reduxState => {
-  const { entries } = reduxState.reducer;
+  const { entries } = reduxState.reducer
+  const { indicators } = reduxState.indicatorsReducer
   return {
-    entries
+    entries,
+    indicators
   };
 };
 
 const dispatchToProps = {
-  updateEntries
+  updateEntries,
+  updateIndicators
 };
 
 export default connect(

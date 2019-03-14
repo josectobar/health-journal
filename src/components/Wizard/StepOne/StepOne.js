@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 
 import "./StepOne.css";
 
+//redux:
 import { connect } from 'react-redux'
+
+//MaterialUI:
+import Paper from "@material-ui/core/Paper";
 
 //Components:
 import Glucose from '../../Indicators/Glucose/Glucose'
@@ -17,8 +21,10 @@ class StepOne extends Component {
     return (
       <div>
         <h1>StepOne</h1>
+        <Paper className="overall-condition-container" elevation={1}>
           <OverallCondition/>
-        <div className="parent-container">
+        </Paper>
+        <div className="indicators-container">
           <PainScale/>
           <Glucose />
           <BloodPressure/>

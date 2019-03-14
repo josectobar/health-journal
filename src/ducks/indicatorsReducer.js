@@ -9,7 +9,7 @@ const initialState = {
     painSwitch: false,
     glucoseSwitch:false,
     bloodPresureSwitch: false,
-    indicators: []
+    indicators: {}
 }
 
 const UPDATE_INDICATOR = "UPDATE_INDICATOR"
@@ -84,7 +84,7 @@ export default function indicatorsReducer( state = initialState, action ) {
                 painSwitch: false,
                 glucoseSwitch:false,
                 bloodPresureSwitch: false,
-                indicators: []
+                indicators: {}
             }
 
         default: 
