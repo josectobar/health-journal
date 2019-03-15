@@ -22,10 +22,11 @@ import Articles from "./Articles/Articles";
 
 //Components:
 import EntryDisplay from "../Dashboard/EntriesDisplay/EntriesDisplay";
-// import ArticlesCard from "./Articles/ArticlesCard/ArticlesCard";
+import ArticlesCard from "./Articles/ArticlesCard/ArticlesCard";
+import MainChart from "./Stats/MainChart/MainChart";
 
 //utilities:
-// import { methods, genMainChart } from "../../utils/Dashboard/statsMethods/statsMethods";
+import { methods } from "../../utils/Dashboard/statsMethods/statsMethods";
 
 class Dashboard extends Component {
   constructor() {
@@ -34,11 +35,12 @@ class Dashboard extends Component {
       anchorEl: null,
       id: 0,
       index: -1,
-      article:{
-        description:``,
-        title:``,
-        urlToImage:``,
-        source:``
+      indicators: [1, 2, 3, 4, 5],
+      article: {
+        description: ``,
+        title: ``,
+        urlToImage: ``,
+        source: ``
       }
     };
 
@@ -51,14 +53,15 @@ class Dashboard extends Component {
   }
 
   async handleDataRequest() {
-    // const { getMonths } = methods;
+    // const {
+
+    //  } = methods;
     try {
       const {
         indicators,
         entries,
         updateEntries,
-        updateIndicators,
-        // getMainChart
+        updateIndicators
       } = this.props;
       if (!entries.length) {
         let entries = await axios.get("/api/entries");
@@ -66,27 +69,29 @@ class Dashboard extends Component {
       }
       if (_.isEmpty(indicators)) {
         let dbIndicators = await axios.get("/api/indicators");
+        console.log(dbIndicators.data);
+
         dbIndicators = dbIndicators.data.map(indicator => {
           indicator.date = new Date(indicator.date);
           return indicator;
         });
+
         updateIndicators(dbIndicators);
-        // const chartStructure = genMainChart(dbIndicators,5)
-        // getMainChart(chartStructure)
-        // console.log(chartStructure)
       }
       if (_.isEmpty(this.state.apiOneArticles)) {
-        //------------------Articles ------------------///
-        // const searchWord = `fibromyalgia`;
+        // ------------------Articles ------------------///
+        const searchWord = `fibromyalgia`;
         const apiKey = "6bc1156549ec47f3b0e638a9780c0167";
         let newsApiArticles = await axios.get(
           `https://newsapi.org/v2/everything?q=+headaches OR +fibromyalgia OR +fatigue&from=2019-03-10&sortBy=publishedAt&to=2019-03-014&apiKey=${apiKey}&sources=medical-news-today`
         );
         let article =
-          newsApiArticles[
-            Math.floor(Math.random() * Math.floor(newsApiArticles.length))
+          newsApiArticles.data.articles[
+            Math.floor(
+              Math.random() * Math.floor(newsApiArticles.data.articles.length)
+            )
           ];
-        this.setState({
+        await this.setState({
           article: article
         });
       }
@@ -128,8 +133,10 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { anchorEl, article } = this.state;
+    const { anchorEl, indicators } = this.state;
     const open = Boolean(anchorEl);
+
+    //Rendering entries list:
     const entries = this.props.entries.map((entry, index) => {
       let { date } = entry;
       date = new Date(date);
@@ -147,6 +154,36 @@ class Dashboard extends Component {
         />
       );
     });
+
+    //Rendering chart:
+    const chartDisplay = indicators.map(id => {
+      const {
+        getAverage,
+        filterIndicator,
+        getMonths,
+        getLabels,
+        getData,
+        getLabelName
+      } = methods;
+      let indicators = getAverage(this.props.indicators);
+      // filter all months listed in the indicators
+      let months = getMonths(indicators);
+      indicators = filterIndicator(indicators, id);
+      // labels months without duplacates
+      let labels = getLabels(months);
+      let Data = getData(indicators, labels, id);
+      let labelName = getLabelName(id);
+      const result = {
+        labels: labels,
+        datasets: [
+          {
+            label: labelName,
+            data: Data
+          }
+        ]
+      };
+      return result;
+    });
     return (
       <div>
         <Switch>
@@ -156,16 +193,11 @@ class Dashboard extends Component {
         {this.props.location.pathname === "/day/dashboard" && (
           <div className="dashboard-container">
             <h1>Dashboard</h1>
-            <Paper
-              onClick={() => this.props.history.push("/day/dashboard/stats")}
-              className="stats-main"
-              elevation={4}
-            >
-              <Stats />
+            <Paper className="stats-main" elevation={4}>
+              <MainChart data={chartDisplay} />
               <Link to="/day/dashboard/stats">Stats</Link>
             </Paper>
-            {/* <Articles /> */}
-            {/* <ArticlesCard article={article} /> */}
+            <ArticlesCard article={this.state.article} />
             <Paper elevation={4} className="entry-list-main">
               {entries}
             </Paper>

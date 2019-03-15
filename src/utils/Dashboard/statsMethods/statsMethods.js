@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 export const methods = {
-    changeDate: (indicators) => {
+    getAverage: (indicators) => {
         let data = _.map(indicators, (indicator) => {
             let {
                 date
@@ -12,9 +12,6 @@ export const methods = {
             indicator.date = date;
             return indicator;
         })
-        return data
-    },
-    getAverage: (data) =>{
         let sortedData = [];
         for (let i = 0; i < data.length; i++) {
             let found = false;
@@ -36,7 +33,7 @@ export const methods = {
                 sortedData.push(data[i]);
             }
         }
-
+        
         for (let i = 0; i < sortedData.length; i++) {
             sortedData[i].reading = Math.floor(
                 sortedData[i].reading / sortedData[i].count
@@ -50,14 +47,30 @@ export const methods = {
     getMonths: indicator => _.map(indicator, el => el.date),
     getLabels: indicators => indicators.filter((month, i, array) => 
     array.indexOf(month) === i),
-    getData: indicator => _.map(indicator, el => el.reading),
+    getData: (indicators, months, id) => {
+        _.map(months, month => {
+            let validate = false
+            indicators.map(indicator => {
+                if (indicator.date === month) {
+                    validate = true
+                }
+                return null
+            })
+            if (validate === false) {
+                indicators.push({indicator_id:id, reading: null, date:month})
+            }
+        })
+       let data =  _.map(indicators, el => el.reading)
+       return data
+    },
     getLabelName: (id) => {
         switch (id) {
             case 1: 
                 return "Glucose Level"
             case 2:
+                return "Blood_pressure - Systolic"
             case 3:
-                return "Blood_pressure"
+                return "Blood_pressure - Diastolic"
             case 4: 
                 return "Pain Scale"
             case 5:
@@ -66,21 +79,5 @@ export const methods = {
             default:
             return 'unknown'
         }
-    }
-}
-export const genMainChart= (indicators, id) => {
-    let dateToMonth = this.getMonths(indicators)
-    let indWithAvg = this.getAverage(dateToMonth)
-    let labels = this.getLabels(indWithAvg)
-    let filteredInd = this.filterIndicator(indWithAvg, id)
-    let data = this.getData(filteredInd)
-    let label = this.getLabelName(id)
-
-    return {
-        labels: labels,
-        datasets: [{
-            label:label,
-            data:data
-        }]
     }
 }

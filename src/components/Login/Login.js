@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { updateUser } from '../../ducks/reducer'
+
+//MaterialUI:
+import ButtonUI from "../Button/ButtonUI"
 import Paper from "@material-ui/core/Paper";
 
 import axios from 'axios'
@@ -24,7 +27,6 @@ class Login extends Component {
         if (!id) {
             try {
                 let verifySession = await axios.get('/auth/current')
-                console.log(verifySession)
                 this.props.updateUser(verifySession.data)
                 this.handleWizardDisplay()
             }catch(err) {
@@ -36,7 +38,6 @@ class Login extends Component {
     }
 
     handleWizardDisplay = () => {
-        console.log('hit!', this.props.wizard)
         this.props.wizard ? 
                 this.props.history.push('/wizard/stepone')
             :
@@ -81,6 +82,7 @@ class Login extends Component {
                     onChange={this.handleInput} 
                     value={this.state.password} 
                     placeholder="Password"/>
+                <ButtonUI action={this.handleLogin} label={'Login'} className="btn-ui"/>
                 <button 
                     onClick={this.handleLogin}>
                     Login

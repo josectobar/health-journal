@@ -21,6 +21,10 @@
     box-shadow: -2px 4px 7px .8px rgb(223, 223, 223)
   }
 
+  .btn-ui {
+      border-radius: 15px;
+      font-weight: 400;
+  }
 
 /*-------------- login.js -------------------*/
 
@@ -64,7 +68,6 @@
     background-color: $light-blue;
     display: flex;
     justify-content: space-between;
-    
     padding: 10em;
         .entry-list-main {
             display: flex;
@@ -152,7 +155,7 @@
                 margin-top: 1.3em;
             }
             .slider-input {
-                width: 2.5em;;
+                width: 2.5em;
             }
             .slider {
                 width: 20em;
