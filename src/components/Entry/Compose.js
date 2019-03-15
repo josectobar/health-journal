@@ -82,11 +82,12 @@ class Compose extends Component {
   async handleEdit() {
     if (this.props.match.params.id) {
       try {
+        console.log('hit')
         const { id } = this.props.match.params;
         const getEntry = await axios.get(`/api/entry/${id}`);
         let { title, content, date } = getEntry.data[0];
         date = new Date(date);
-        await this.updateEntry({
+        await this.props.updateEntry({
           title,
           content,
           date

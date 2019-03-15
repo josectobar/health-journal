@@ -4,30 +4,28 @@ import "./Dashboard.scss";
 import axios from "axios";
 
 //lodash:
-import _ from 'lodash/fp'
+import _ from "lodash/fp";
 
 //materialUI:
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MoreVertIcon from "@material-ui/icons/MoreVert"
 import Paper from "@material-ui/core/Paper";
 
 //Redux:
 import { connect } from "react-redux";
 import { updateEntries } from "../../ducks/reducer";
-import { updateIndicators } from "../../ducks/indicatorsReducer"
+import { updateIndicators } from "../../ducks/indicatorsReducer";
+import { getMainChart } from "../../ducks/statsReducer";
+
 //Routes:
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import Stats from "./Stats/Stats";
 import Articles from "./Articles/Articles";
 
-// --------------------------- Material UI --------------------------------
-const options = ["Edit", "View", "Delete"];
+//Components:
+import EntryDisplay from "../Dashboard/EntriesDisplay/EntriesDisplay";
+// import ArticlesCard from "./Articles/ArticlesCard/ArticlesCard";
 
-const ITEM_HEIGHT = 48;
-
-// --------------------------- Material UI --------------------------------
+//utilities:
+// import { methods, genMainChart } from "../../utils/Dashboard/statsMethods/statsMethods";
 
 class Dashboard extends Component {
   constructor() {
@@ -35,7 +33,13 @@ class Dashboard extends Component {
     this.state = {
       anchorEl: null,
       id: 0,
-      index: -1
+      index: -1,
+      article:{
+        description:``,
+        title:``,
+        urlToImage:``,
+        source:``
+      }
     };
 
     this.handleDataRequest = this.handleDataRequest.bind(this);
@@ -47,19 +51,47 @@ class Dashboard extends Component {
   }
 
   async handleDataRequest() {
+    // const { getMonths } = methods;
     try {
-      const { indicators, entries, updateEntries, updateIndicators } = this.props;
+      const {
+        indicators,
+        entries,
+        updateEntries,
+        updateIndicators,
+        // getMainChart
+      } = this.props;
       if (!entries.length) {
         let entries = await axios.get("/api/entries");
         updateEntries(entries.data);
       }
       if (_.isEmpty(indicators)) {
-        let dbIndicators = await axios.get("/api/indicators")
-        console.log(typeof dbIndicators.data, dbIndicators.data)
-        updateIndicators(dbIndicators.data)
+        let dbIndicators = await axios.get("/api/indicators");
+        dbIndicators = dbIndicators.data.map(indicator => {
+          indicator.date = new Date(indicator.date);
+          return indicator;
+        });
+        updateIndicators(dbIndicators);
+        // const chartStructure = genMainChart(dbIndicators,5)
+        // getMainChart(chartStructure)
+        // console.log(chartStructure)
+      }
+      if (_.isEmpty(this.state.apiOneArticles)) {
+        //------------------Articles ------------------///
+        // const searchWord = `fibromyalgia`;
+        const apiKey = "6bc1156549ec47f3b0e638a9780c0167";
+        let newsApiArticles = await axios.get(
+          `https://newsapi.org/v2/everything?q=+headaches OR +fibromyalgia OR +fatigue&from=2019-03-10&sortBy=publishedAt&to=2019-03-014&apiKey=${apiKey}&sources=medical-news-today`
+        );
+        let article =
+          newsApiArticles[
+            Math.floor(Math.random() * Math.floor(newsApiArticles.length))
+          ];
+        this.setState({
+          article: article
+        });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -73,22 +105,21 @@ class Dashboard extends Component {
 
   handleSelect = option => {
     const { id, index } = this.state;
-      option === "Delete"
+    option === "Delete"
       ? this.handleDelete(id, index)
       : option === "Edit"
       ? this.props.history.push(`/day/entry/compose/${id}`)
       : option === "View"
       ? this.props.history.push(`/day/entry/${id}`)
-      : this.setState({ anchorEl: null, id: 0, index:-1 });
-    
-  }
+      : this.setState({ anchorEl: null, id: 0, index: -1 });
+  };
 
   handleDelete = async (id, index) => {
-    let { updateEntries, entries } = this.props
-    entries.splice(index, 1)
-    updateEntries(entries)
-    let updatedEntries = await axios.delete(`/api/entry/${id}`)
-    updateEntries(updatedEntries.data)
+    let { updateEntries, entries } = this.props;
+    entries.splice(index, 1);
+    updateEntries(entries);
+    let updatedEntries = await axios.delete(`/api/entry/${id}`);
+    updateEntries(updatedEntries.data);
     this.setState({ anchorEl: null, id: 0, index: -1 });
   };
 
@@ -97,94 +128,69 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl, article } = this.state;
     const open = Boolean(anchorEl);
-    const displayEntries = this.props.entries.map((entry, index) => {
-      const { id, title } = entry;
+    const entries = this.props.entries.map((entry, index) => {
       let { date } = entry;
       date = new Date(date);
       date = date.toLocaleDateString();
       return (
-        <div className="entry-list-container" key={index}>
-          <div
-            className="entry-list-map"
-            onClick={() => this.handleEntryView(id)}
-            >
-            <p>{title}</p>
-            <p>{date}</p>
-            </div>
-            {/* -------------------------------------Material UI --------------------------------- */}
-            <div>
-              <IconButton
-                aria-label="More"
-                aria-owns={open ? "long-menu" : undefined}
-                aria-haspopup="true"
-                onClick={event => this.handleClick(event, id, index)}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                open={open}
-                id="long-menu"
-                onClose={this.handleSelect}
-                PaperProps={{
-                  style: {
-                    maxHeight: ITEM_HEIGHT * 4.5,
-                    width: 200
-                  }
-                }}
-              >
-                {options.map(option => {
-                  return (
-                    <MenuItem
-                      key={option}
-                      selected={option === "Edit"}
-                      onClick={() => this.handleSelect(option)}
-                    >
-                      {option}
-                    </MenuItem>
-                  );
-                })}
-              </Menu>
-            </div>
-          {/* -------------------------------------Material UI --------------------------------- */}
-        </div>
+        <EntryDisplay
+          key={index}
+          entry={entry}
+          date={date}
+          open={open}
+          index={index}
+          anchorEl={anchorEl}
+          handleClick={this.handleClick}
+          handleSelect={this.handleSelect}
+        />
       );
     });
     return (
-      <div className="dashboard-container">
+      <div>
         <Switch>
           <Route path="/day/dashboard/stats" component={Stats} />
           <Route path="/day/dashboard/articles" component={Articles} />
         </Switch>
-        <h1>Dashboard</h1>
-        <Paper 
-          className="stats-main"
-          elevation={4}>
-          <Stats />
-        </Paper>
-        <Articles />
-        <Paper elevation={4} className="entry-list-main">
-          {displayEntries}
-        </Paper>
+        {this.props.location.pathname === "/day/dashboard" && (
+          <div className="dashboard-container">
+            <h1>Dashboard</h1>
+            <Paper
+              onClick={() => this.props.history.push("/day/dashboard/stats")}
+              className="stats-main"
+              elevation={4}
+            >
+              <Stats />
+              <Link to="/day/dashboard/stats">Stats</Link>
+            </Paper>
+            {/* <Articles /> */}
+            {/* <ArticlesCard article={article} /> */}
+            <Paper elevation={4} className="entry-list-main">
+              {entries}
+            </Paper>
+          </div>
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = reduxState => {
-  const { entries } = reduxState.reducer
-  const { indicators } = reduxState.indicatorsReducer
+  const { entries } = reduxState.reducer;
+  const { indicators } = reduxState.indicatorsReducer;
+  const { mainChart } = reduxState.statsReducer;
   return {
     entries,
-    indicators
+    indicators,
+    mainChart
   };
 };
 
 const dispatchToProps = {
   updateEntries,
-  updateIndicators
+  updateIndicators,
+  getMainChart
 };
 
 export default connect(

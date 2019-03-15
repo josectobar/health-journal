@@ -29,6 +29,7 @@ module.exports = {
         const db = req.app.get('db')
         const { id } = req.session.user
         const getIndicators = await db.indicators.get_indicators({user_id:id})
+        console.log(getIndicators)
         res.status(200).send(getIndicators)
     },
     postEntry: async (req, res) => {
