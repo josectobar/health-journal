@@ -53,9 +53,6 @@ class Dashboard extends Component {
   }
 
   async handleDataRequest() {
-    // const {
-
-    //  } = methods;
     try {
       const {
         indicators,
@@ -68,18 +65,16 @@ class Dashboard extends Component {
         updateEntries(entries.data);
       }
       if (_.isEmpty(indicators)) {
-        let dbIndicators = await axios.get("/api/indicators");
-        console.log(dbIndicators.data);
-
+        let dbIndicators = await axios.get("/api/indicators")
         dbIndicators = dbIndicators.data.map(indicator => {
           indicator.date = new Date(indicator.date);
           return indicator;
         });
-
         updateIndicators(dbIndicators);
       }
+
+      // ------------------Articles ------------------///
       if (_.isEmpty(this.state.apiOneArticles)) {
-        // ------------------Articles ------------------///
         const searchWord = `fibromyalgia`;
         const apiKey = "6bc1156549ec47f3b0e638a9780c0167";
         let newsApiArticles = await axios.get(

@@ -14,6 +14,10 @@ import { withRouter } from "react-router-dom";
 
 //QuillJS:
 import ReactQuill from "react-quill";
+import {quillModules, quillFormats } from '../../utils/Entry/QuillJS/modules'
+
+//React-tag-input:
+import Tags from './Tags/Tags'
 
 //Date-pickerjs:
 import DatePicker from "react-datepicker";
@@ -43,36 +47,7 @@ class Compose extends Component {
 
   //Quill modules & format:
 
-  modules = {
-    toolbar: [
-      [{ size: ["small", false, "large", "huge"] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ color: [] }, { background: [] }],
-      [{ font: [] }],
-      [{ align: [] }],
-      ["clean"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" }
-      ],
-      ["link", "image"]
-    ]
-  };
-  formats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image"
-  ];
+  
   //----------------------------------------------------------
 
   componentDidMount() {
@@ -137,6 +112,7 @@ class Compose extends Component {
   }
 
   render() {
+    console.log( quillModules)
     const { updateEntry, entry } = this.props;
     return (
       <div>
@@ -163,25 +139,30 @@ class Compose extends Component {
           )}
         </div>
         <div className="quill-btn-container">
-          <ReactQuill
-            className="quil"
-            theme="snow"
-            modules={this.modules}
-            format={this.format}
-            value={entry.content}
-            placeholder="This is all I need"
-            readOnly={false}
-            onChange={delta => updateEntry({ content: delta })}
-          />
-          {this.props.location.pathname === "/day/compose" ? (
-            <button className="compose-btn" onClick={() => this.handleSave()}>
-              Submit
-            </button>
-          ) : this.props.location.pathname === "/wizard/steptwo" ? null : (
-            <button className="compose-btn" onClick={this.handleEntryUpdate}>
-              Save Changes
-            </button>
-          )}
+          <div className='tag-component'>
+            <Tags/>
+          </div>
+          <div>
+            <ReactQuill
+              className="quil"
+              theme="snow"
+              modules={quillModules}
+              format={quillFormats}
+              value={entry.content}
+              placeholder="Type your entry here."
+              readOnly={false}
+              onChange={delta => updateEntry({ content: delta })}
+              />
+          </div>
+            {this.props.location.pathname === "/day/compose" ? (
+              <button className="compose-btn" onClick={() => this.handleSave()}>
+                Submit
+              </button>
+            ) : this.props.location.pathname === "/wizard/steptwo" ? null : (
+              <button className="compose-btn" onClick={this.handleEntryUpdate}>
+                Save Changes
+              </button>
+            )}
         </div>
       </div>
     );

@@ -8,7 +8,8 @@ const initialState = {
     entry: {
         date: new Date(),
         content: ``,
-        title: ``
+        title: ``,
+        tags: []
     },
     wizard: true
 }
@@ -117,7 +118,8 @@ export default function reducer(state = initialState, action) {
                 entry: {
                     date: new Date(),
                     content: ``,
-                    title: ``
+                    title: ``,
+                    tags: []
                 },
                 wizard: true
             }

@@ -20,7 +20,6 @@ const styles = {
 
 function ArticlesCard(props) {
   const { description, title, urlToImage, source } = props.article
-  console.log(props)
   const { classes } = props;
   return (
     <Card className={classes.card}>
