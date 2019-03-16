@@ -187,13 +187,12 @@ class Dashboard extends Component {
         </Switch>
         {this.props.location.pathname === "/day/dashboard" && (
           <div className="dashboard-container">
-            <h1>Dashboard</h1>
-            <Paper className="stats-main" elevation={4}>
-              <MainChart data={chartDisplay} />
+            <Paper className="flex-item stats-main" elevation={4}>
+              <MainChart className="flex-item" data={chartDisplay} />
               <Link to="/day/dashboard/stats">Stats</Link>
             </Paper>
-            <ArticlesCard article={this.state.article} />
-            <Paper elevation={4} className="entry-list-main">
+            <ArticlesCard className="flex-item" article={this.state.article} />
+            <Paper elevation={4} className="flex-item entry-list-main">
               {entries}
             </Paper>
           </div>

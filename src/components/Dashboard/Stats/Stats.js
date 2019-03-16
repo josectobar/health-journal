@@ -10,7 +10,7 @@ class Stats extends Component {
     return (
       <div>
         <h1>Stats</h1>
-        {/* <MainChart/> */}
+        <MainChart />
       </div>
     );
   }

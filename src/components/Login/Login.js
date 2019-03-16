@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { updateUser } from '../../ducks/reducer'
-
+import logo from '../../logo.png'
 //MaterialUI:
 import ButtonUI from "../Button/ButtonUI"
 import Paper from "@material-ui/core/Paper";
@@ -66,29 +66,31 @@ class Login extends Component {
 
     render() {
         return (
-            <Paper elevation={1} className="login-main">
-                <h1>Login</h1>
-                <input 
-                    className="input-effect"
-                    type="text" 
-                    name="username" 
-                    onChange={this.handleInput} 
-                    value={this.state.username} 
-                    placeholder="Username"/>
-                <input 
-                    className="input-effect"
-                    type="Password" 
-                    name="password" 
-                    onChange={this.handleInput} 
-                    value={this.state.password} 
-                    placeholder="Password"/>
-                <ButtonUI action={this.handleLogin} label={'Login'} className="btn-ui"/>
-                <button 
-                    onClick={this.handleLogin}>
-                    Login
-                </button>
-                <Link to="/signup">Not a user?</Link>
-            </Paper>
+            <div className="background">
+                <Paper elevation={1} className="login-main">
+                    <img className="logo" src={logo} alt="logo"/>
+                    <input 
+                        className="input-effect"
+                        type="text" 
+                        name="username" 
+                        onChange={this.handleInput} 
+                        value={this.state.username} 
+                        placeholder="Username"/>
+                    <input 
+                        className="input-effect"
+                        type="Password" 
+                        name="password" 
+                        onChange={this.handleInput} 
+                        value={this.state.password} 
+                        placeholder="Password"/>
+                    <ButtonUI action={this.handleLogin} label={'Login'} className="btn-ui"/>
+                    <button 
+                        onClick={this.handleLogin}>
+                        Login
+                    </button>
+                    <Link to="/signup">Not a user?</Link>
+                </Paper>
+            </div>
         );
     }
 }
