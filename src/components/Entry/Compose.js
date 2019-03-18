@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //QuillJS:
-import ReactQuill from "react-quill";
+import ReactQuill from "react-quill"
 import {quillModules, quillFormats } from '../../utils/Entry/QuillJS/modules'
 
 //React-tag-input:
@@ -31,27 +31,23 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class Compose extends Component {
   constructor() {
-    super();
-    this.state = {
-      content: ``,
-      title: ``,
-      date: new Date()
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleTitleInput = this.handleTitleInput.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleDateInput = this.handleDateInput.bind(this);
+    super()
+    this.handleSave = this.handleSave.bind(this)
     this.handleEdit = this.handleEdit.bind(this);
     this.handleEntryUpdate = this.handleEntryUpdate.bind(this);
+    this.HandleEditCancel = this.HandleEditCancel.bind(this)
   }
-
-  //Quill modules & format:
-
-  
-  //----------------------------------------------------------
 
   componentDidMount() {
     this.handleEdit();
+  }
+
+  componentWillUnmount(){
+    this.HandleEditCancel()
+  }
+
+  HandleEditCancel(){
+    this.props.clearEntry()
   }
 
   async handleEdit() {
@@ -71,24 +67,6 @@ class Compose extends Component {
         console.log(error);
       }
     }
-  }
-
-  handleTitleInput(e) {
-    this.setState({
-      title: e.target.value
-    });
-  }
-
-  handleDateInput(date) {
-    this.setState({
-      date
-    });
-  }
-
-  handleChange(value) {
-    this.setState({
-      content: value
-    });
   }
 
   async handleSave() {
@@ -111,9 +89,14 @@ class Compose extends Component {
     this.props.history.push("/day/dashboard");
   }
 
+  handleImageUpload= (event) => {
+    console.log(event)
+  }
+
   render() {
-    console.log( quillModules)
     const { updateEntry, entry } = this.props;
+    let source = document.querySelectorAll('.ql-editor img')[0] ? document.querySelectorAll('.ql-editor img')[0].src : null
+    console.log(source)
     return (
       <div>
         {this.props.location.pathname === "/day/compose" ? (
@@ -144,7 +127,7 @@ class Compose extends Component {
           </div>
           <div>
             <ReactQuill
-              className="quil"
+              className="quill"
               theme="snow"
               modules={quillModules}
               format={quillFormats}

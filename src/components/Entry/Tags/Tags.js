@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { WithContext as ReactTags } from 'react-tag-input'
 import './Tags.scss'
+
+//redux:
+import { connect } from 'react-redux'
  
 const KeyCodes = {
   comma: 188,
@@ -9,13 +12,13 @@ const KeyCodes = {
  
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
  
-export default class Tags extends Component {
+class Tags extends Component {
     constructor(props) {
         super(props);
  
         this.state = {
             tags: [
-                { id: "Tag Sample", text: "Tag Sample" }
+                { id: "Sample Tag", text: "Sample Tag" }
              ],
             suggestions: [
                 { id: 'fibromyalgia', text: 'fibromyalgia' },
@@ -30,6 +33,19 @@ export default class Tags extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
+    }
+
+    componentDidMount(){
+        this.checkTags()
+    }
+
+    checkTags(){
+        if (this.props.entry.tags) {
+            console.log(this.props.entry.tags)
+            this.setState({
+                tags: this.props.entry.tags
+            })
+        }
     }
  
     handleDelete(i) {
@@ -55,8 +71,8 @@ export default class Tags extends Component {
     }
  
     render() {
-        console.log(this.state.tags)
         const { tags, suggestions } = this.state;
+        console.log(this.props.entry.tags)
         return (
             <div>
                 <ReactTags tags={tags}
@@ -69,3 +85,12 @@ export default class Tags extends Component {
         )
     }
 }
+
+const mapStateToProps = reduxState => {
+    const { entry } = reduxState.reducer
+    return {
+        entry
+    }
+}
+
+export default connect(mapStateToProps)(Tags)

@@ -25,9 +25,6 @@ import EntryDisplay from "../Dashboard/EntriesDisplay/EntriesDisplay";
 import ArticlesCard from "./Articles/ArticlesCard/ArticlesCard";
 import MainChart from "./Stats/MainChart/MainChart";
 
-//utilities:
-import { methods } from "../../utils/Dashboard/statsMethods/statsMethods";
-
 class Dashboard extends Component {
   constructor() {
     super();
@@ -35,7 +32,6 @@ class Dashboard extends Component {
       anchorEl: null,
       id: 0,
       index: -1,
-      indicators: [1, 2, 3, 4, 5],
       article: {
         description: ``,
         title: ``,
@@ -78,17 +74,19 @@ class Dashboard extends Component {
         const searchWord = `fibromyalgia`;
         const apiKey = "6bc1156549ec47f3b0e638a9780c0167";
         let newsApiArticles = await axios.get(
-          `https://newsapi.org/v2/everything?q=+headaches OR +fibromyalgia OR +fatigue&from=2019-03-10&sortBy=publishedAt&to=2019-03-014&apiKey=${apiKey}&sources=medical-news-today`
+          `https://newsapi.org/v2/everything?q=+headaches&+OR+fibromyalgia&+OR+fatigue&from=2019-03-10&sortBy=publishedAt&to=2019-03-014&apiKey=${apiKey}&sources=medical-news-today`
         );
         let article =
-          newsApiArticles.data.articles[
-            Math.floor(
-              Math.random() * Math.floor(newsApiArticles.data.articles.length)
+        newsApiArticles.data.articles[
+          Math.floor(
+            Math.random() * Math.floor(newsApiArticles.data.articles.length)
             )
-          ];
-        await this.setState({
+          ]
+          console.log(article)
+        this.setState({
           article: article
         });
+ 
       }
     } catch (error) {
       console.log(error);
@@ -128,7 +126,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { anchorEl, indicators } = this.state;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     //Rendering entries list:
@@ -150,35 +148,6 @@ class Dashboard extends Component {
       );
     });
 
-    //Rendering chart:
-    const chartDisplay = indicators.map(id => {
-      const {
-        getAverage,
-        filterIndicator,
-        getMonths,
-        getLabels,
-        getData,
-        getLabelName
-      } = methods;
-      let indicators = getAverage(this.props.indicators);
-      // filter all months listed in the indicators
-      let months = getMonths(indicators);
-      indicators = filterIndicator(indicators, id);
-      // labels months without duplacates
-      let labels = getLabels(months);
-      let Data = getData(indicators, labels, id);
-      let labelName = getLabelName(id);
-      const result = {
-        labels: labels,
-        datasets: [
-          {
-            label: labelName,
-            data: Data
-          }
-        ]
-      };
-      return result;
-    });
     return (
       <div>
         <Switch>
@@ -188,10 +157,10 @@ class Dashboard extends Component {
         {this.props.location.pathname === "/day/dashboard" && (
           <div className="dashboard-container">
             <Paper className="flex-item stats-main" elevation={4}>
-              <MainChart className="flex-item" data={chartDisplay} />
+              <MainChart className="flex-item" />
               <Link to="/day/dashboard/stats">Stats</Link>
             </Paper>
-            <ArticlesCard className="flex-item" article={this.state.article} />
+            <ArticlesCard stle={{'z-index':-1}}className="flex-item" article={this.state.article} />
             <Paper elevation={4} className="flex-item entry-list-main">
               {entries}
             </Paper>
