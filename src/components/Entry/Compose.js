@@ -53,15 +53,17 @@ class Compose extends Component {
   async handleEdit() {
     if (this.props.match.params.id) {
       try {
-        console.log('hit')
         const { id } = this.props.match.params;
         const getEntry = await axios.get(`/api/entry/${id}`);
-        let { title, content, date } = getEntry.data[0];
-        date = new Date(date);
+        let { title, content, date, tags } = getEntry.data[0];
+        date = new Date(date)
+        tags = tags.split(',')
+        // console.log(tags)
         await this.props.updateEntry({
           title,
           content,
-          date
+          date,
+          tags
         });
       } catch (error) {
         console.log(error);
@@ -89,16 +91,16 @@ class Compose extends Component {
     this.props.history.push("/day/dashboard");
   }
 
-  handleImageUpload= (event) => {
-    console.log(event)
-  }
+  // handleImageUpload= (event) => {
+  //   console.log(event)
+  // }
 
   render() {
     const { updateEntry, entry } = this.props;
-    let source = document.querySelectorAll('.ql-editor img')[0] ? document.querySelectorAll('.ql-editor img')[0].src : null
-    console.log(source)
+    // let source = document.querySelectorAll('.ql-editor img')[0] ? document.querySelectorAll('.ql-editor img')[0].src : null
+    // console.log(source)
     return (
-      <div>
+      <div className="main-compose-container">
         {this.props.location.pathname === "/day/compose" ? (
           <h1>Compose new entry</h1>
         ) : this.props.location.pathname === "/wizard/steptwo" ? null : (
@@ -123,7 +125,7 @@ class Compose extends Component {
         </div>
         <div className="quill-btn-container">
           <div className='tag-component'>
-            <Tags/>
+            <Tags tags={this.props.tags}/>
           </div>
           <div>
             <ReactQuill

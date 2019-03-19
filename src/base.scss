@@ -1,4 +1,5 @@
 @import './variables.scss';
+@import url('https://fonts.googleapis.com/css?family=Lato|Nunito:400,700|Roboto');
 
 
 /*-------------- General -------------------*/
@@ -8,6 +9,9 @@
     box-sizing: border-box;
   }
 
+  h1 {
+      font-family: Nunito, Roboto, Lato;
+  }
 
   .input-effect {
     background-color: rgb(240, 247, 241);
@@ -33,7 +37,7 @@
        width: 15em;
        position: absolute;
        margin: 0 auto;
-       top: 3em;
+       top: 4.8em;
     }
     // clip-path: polygon(27% 16%, 100% 0%, 100% 86%, 0 98%);
     background-color: #C1C8E4;
@@ -46,10 +50,10 @@
         flex-direction: column;
         align-items: center;
         width: 20em;
-        height: 30em;
+        height: 20em;
         padding: 1em;
-        margin: 10em auto;
-        padding-top: 6em;
+        margin: 14em auto;
+        padding-top: 3em;
         input {
             width: 8em;
             margin: 1em auto;
@@ -66,7 +70,10 @@
     
     
     .background {
-        
+        .login-main{
+            margin-bottom: 0;
+
+        }
         
     }
 }
@@ -82,18 +89,38 @@
     display: flex;
     flex-direction: column;
     position: fixed;
+    z-index: 10;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100vw;
-    .button-wrap{
+    .menu-icons {
         display: flex;
-        flex-flow: column;
+        flex-direction: column;
         align-items: center;
-        margin: 2em;
-        label {
-            font-size: 11px;
-            font-weight: 700;
+        position: absolute;
+        bottom: .1em;
+        left: .1em;
+        background-color:  rgba(46, 58, 92,0.5);
+        border-radius: 20px;
+        :hover {
+            color: rgba(255, 255, 255, 0.342);
+        }
+        :active {
+            color:   rgba(6, 255, 172, 0.692);
+        }
+        .btn-label{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 2em;
+            height: 2em;
+            margin: 1em;
+            label {
+                font-size: 11px;
+                font-weight: 700;
+            }
+            
         }
     }
     .add-btn {
@@ -116,16 +143,11 @@
         left: 0;
         width: 5em;
         height: 100vh;
-        .button-wrap{
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            margin: 2em;
-            label {
-                font-size: 11px;
-                font-weight: 700;
-            }
-
+        .menu-icons{
+            margin-top: 6em;
+            position: initial;
+            justify-content: space-around;
+            height: 20em;
         }
         .add-btn {
             display: none;
@@ -138,9 +160,19 @@
 .header-container {
     background-color: $dark-blue;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
+    position: fixed;
+    z-index: 5;
+    padding: 1em 2em;
+    width: 100vw;
+    height: 5.4em;
+    top: 0;
+    h2 {
+        font-family: Nunito, Roboto, Lato;
+        color: white;
+        margin-right: 1em;
+    }
 }
-
 /*-------------- Dashboard.js -------------------*/
 
 .dashboard-container {
@@ -150,6 +182,7 @@
 	flex-direction: column;
 	justify-content: flex-start;
     padding: 1em;
+    padding-top: 6em;
     .stats-main {
         height: 15em;
     }
@@ -157,6 +190,11 @@
             width: 100%;
             margin-top: 1em;
             margin-bottom: 1em;
+        }
+        // -------Article image ------
+        .MuiButtonBase-root-9 {
+            // position: inherit;
+            z-index: -0;
         }
         .entry-list-main {
             display: flex;
@@ -179,7 +217,7 @@
         display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-        padding-top: 1em;
+        padding-top: 6em;
         padding-left: 7em;
         .flex-item {
             width: 45%;
@@ -222,38 +260,66 @@
 .title{
     width: 40em;
 }
-.compose-text-date {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-
-    input {
-        margin: 3em;
-        width: 30em;   
+.main-compose-container {
+    padding-top: 7em;
+    height: 100vh;
+    padding-left: 3em;
+    padding-right: 2em;
+    .compose-text-date {
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        margin: 0 auto;
+        
+        input {
+            margin: 1em auto;
+            width: 15em;   
+        }
+        #datepicker {
+            width: 10em;
+        }
     }
-    #datepicker {
-        width: 10em;
+    .quill-btn-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 90%;
+        margin: 0 auto;
+        .quill {
+            position: block;
+            height: 10em;
+        }
+        .qlcontainer, .ql-snow{
+            position: inherit;
+        }
+        .compose-btn {
+            position: absolute;
+            bottom: 2em;
+            left: 50%;
+            width: 10em;
+            padding: 1em;
+            margin: 0em auto;
+        }
     }
 }
-.quill-btn-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 70%;
-    height: 40em;
-    margin: 0 auto;
-    .quill {
-        height: 30em;
+@media (min-width: 600px) {
+    .main-compose-container {
+        padding-left: 3em;
+        padding-right: 3em;
+
+        .compose-text-date {
+            width: 90%;
+            flex-direction: row;
+            #date-picker{
+                margin: 0;
+            }
+        }
     }
-    .compose-btn {
-        width: 10em;
-        padding: 1em;
-        margin: 4em auto;
-    }
+
+
 }
-
-/*-------------- Tags.js -----------------*/
-
+    /*-------------- Tags.js -----------------*/
+    
 iv.ReactTags__tags {
     position: relative;
     margin: 40px;

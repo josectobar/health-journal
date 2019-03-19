@@ -17,11 +17,20 @@ import purple from '@material-ui/core/colors/purple';
 import teal from '@material-ui/core/colors/teal';
 
 import "./App.css";
+import { blue } from "@material-ui/core/colors";
 
-const theme = createMuiTheme(
-  {
+const theme = createMuiTheme({
+  overrides: {
+    MuiIconButton: {
+      root:{ 
+        display:'flex',
+        flexDirection: 'column'
+
+      }
+    }
+  },
     palette: {
-      primary: purple,
+      primary: blue,
       variant: purple[500],
       secondary: teal,
     },

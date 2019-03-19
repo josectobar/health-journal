@@ -74,7 +74,7 @@ class Dashboard extends Component {
         const searchWord = `fibromyalgia`;
         const apiKey = "6bc1156549ec47f3b0e638a9780c0167";
         let newsApiArticles = await axios.get(
-          `https://newsapi.org/v2/everything?q=+headaches&+OR+fibromyalgia&+OR+fatigue&from=2019-03-10&sortBy=publishedAt&to=2019-03-014&apiKey=${apiKey}&sources=medical-news-today`
+          `https://newsapi.org/v2/everything?q=+headaches&+OR+fibromyalgia&+OR+fatigue&from=2019-03-01&sortBy=publishedAt&to=2019-03-014&apiKey=${apiKey}&sources=medical-news-today`
         );
         let article =
         newsApiArticles.data.articles[
@@ -160,7 +160,7 @@ class Dashboard extends Component {
               <MainChart className="flex-item" />
               <Link to="/day/dashboard/stats">Stats</Link>
             </Paper>
-            <ArticlesCard stle={{'z-index':-1}}className="flex-item" article={this.state.article} />
+            <ArticlesCard className="flex-item" article={this.state.article} />
             <Paper elevation={4} className="flex-item entry-list-main">
               {entries}
             </Paper>

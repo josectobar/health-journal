@@ -36,43 +36,40 @@ class Tags extends Component {
     }
 
     componentDidMount(){
-        this.checkTags()
+        // this.checkTags()
     }
 
     checkTags(){
-        if (this.props.entry.tags) {
-            console.log(this.props.entry.tags)
+        console.log(this.props)
             this.setState({
-                tags: this.props.entry.tags
+                tags: this.props.tags
             })
-        }
     }
- 
+    
     handleDelete(i) {
         const { tags } = this.state;
         this.setState({
-         tags: tags.filter((tag, index) => index !== i),
+            tags: tags.filter((tag, index) => index !== i),
         })
     }
- 
+    
     handleAddition(tag) {
         this.setState(state => ({ tags: [...state.tags, tag] }));
     }
- 
+    
     handleDrag(tag, currPos, newPos) {
         const tags = [...this.state.tags];
         const newTags = tags.slice();
- 
+        
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
- 
+        
         // re-render
         this.setState({ tags: newTags });
     }
- 
+    
     render() {
         const { tags, suggestions } = this.state;
-        console.log(this.props.entry.tags)
         return (
             <div>
                 <ReactTags tags={tags}

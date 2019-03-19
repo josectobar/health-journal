@@ -84,10 +84,6 @@ class Login extends Component {
                         value={this.state.password} 
                         placeholder="Password"/>
                     <ButtonUI action={this.handleLogin} label={'Login'} className="btn-ui"/>
-                    <button 
-                        onClick={this.handleLogin}>
-                        Login
-                    </button>
                     <Link to="/signup">Not a user?</Link>
                 </Paper>
             </div>

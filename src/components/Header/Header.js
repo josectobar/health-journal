@@ -4,6 +4,8 @@ import './Header.scss'
 import { connect } from 'react-redux'
 import { updateUser, clearState } from '../../ducks/reducer'
 
+import ButtonUI from "../Button/ButtonUI"
+
 import axios from 'axios'
 
 class Header extends Component {
@@ -37,14 +39,14 @@ class Header extends Component {
 
     render() {
         return (
+            <>
+            {this.props.pathname.includes('/day') &&
             <header className="header-container">
-                {this.props.pathname.includes('/day') &&
-                    <>
                         <h2>Hello {this.props.name}!</h2>
                         <button onClick={this.handleLogout}>Logout</button>
-                    </>
+                        </header>
                 }
-            </header>
+            </>
         );
     }
 }
