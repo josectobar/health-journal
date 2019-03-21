@@ -13,7 +13,6 @@
 
 # misc
 .DS_Store
-*.png
 *.svg
 .env
 .env.prod

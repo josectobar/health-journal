@@ -1,6 +1,6 @@
 ## Day - Health Journal
 
-### - Jose Tobar - Personal project. 
+### Jose Tobar - Personal project. 
 In the project directory, you can run:
 
 This project was created as a portfolio piece. It is intended to target users that need a platform where they can create logs related to any health condition that they'd like to keep track of, and add some basic health indicators.
