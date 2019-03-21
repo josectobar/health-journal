@@ -36,12 +36,6 @@ class OverallCondition extends Component{
   state = {
     value:``
   }
-
-  handleInput = (event) => {
-    const {date, id} = this.props
-    const { value } = event.target
-    this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: 5, date}})
-  }
   
   handleConvToNum =(event) => {
     const {date, id} = this.props
