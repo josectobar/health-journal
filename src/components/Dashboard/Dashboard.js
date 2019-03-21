@@ -73,7 +73,7 @@ class Dashboard extends Component {
       if (_.isEmpty(this.state.apiOneArticles)) {
         const apiKey = "6bc1156549ec47f3b0e638a9780c0167";
         let newsApiArticles = await axios.get(
-          `https://newsapi.org/v2/everything?q=+headaches&+OR+fibromyalgia&+OR+fatigue&from=2019-03-01&sortBy=publishedAt&to=2019-03-014&apiKey=${apiKey}&sources=medical-news-today`
+          `https://newsapi.org/v2/everything?q=+headaches&+OR+fibromyalgia&+OR+fatigue&from=2019-02-21&sortBy=publishedAt&to=2019-03-14&apiKey=${apiKey}&sources=medical-news-today`
         );
         let article =
           newsApiArticles.data.articles[

@@ -25,7 +25,8 @@ const styles = theme => ({
   group: {
     margin: `${theme.spacing.unit}px 0`,
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent:'center'
   },
 });
 
@@ -36,9 +37,47 @@ class OverallCondition extends Component{
     value:``
   }
 
-  handleInput = (value) => {
+  handleInput = (event) => {
     const {date, id} = this.props
-    this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: value, date}})
+    const { value } = event.target
+    this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: 5, date}})
+  }
+  
+  handleConvToNum =(event) => {
+    const {date, id} = this.props
+    const { value } = event.target
+    switch (value) {
+      case "Excellent":
+      return this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: 5, date}})
+      case "Good":
+      return this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: 4, date}})
+      case "Normal":
+      return this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: 3, date}})
+      case "I've been better":
+      return this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: 2, date}})
+      case "Don't ask..":
+      return this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: 1, date}})
+      default:
+      return this.props.updateIndicator({overall_condition:{user_id:id, indicator_id: 5, reading: 0, date}})
+    }
+  }
+
+  handleConvToStr = () => {
+    const { reading } = this.props.overall_condition
+    switch (reading) {
+      case 5:
+      return "Excellent"
+      case 4:
+      return "Good"
+      case 3:
+      return "Normal"
+      case 2:
+      return "I've been better"
+      case 1:
+      return "Don't ask.."
+      default:
+      return null
+    }
   }
 
   handleChange = event => {
@@ -46,59 +85,30 @@ class OverallCondition extends Component{
     console.log(this.state.value)
   };
 
-  // overallConditionDisp = (
-  //     <div>
-  //       <div
-  //           onClick={() => handleInput(5)}
-  //         >
-  //           <h5>Excelent</h5>
-  //         </div>
-  //         <div
-  //           onClick={() => handleInput(4)}
-  //         >
-  //           <h5>Good</h5>
-  //         </div>
-  //         <div
-  //           onClick={() => handleInput(3)}
-  //         >
-  //           <h5>Normal</h5>
-  //         </div>
-  //         <div
-  //           onClick={() => handleInput(2)}
-  //         >
-  //           <h5>I've been better</h5>
-  //         </div>
-  //         <div
-  //           onClick={() => handleInput(1)}
-  //         >
-  //           <h5>Don't ask...</h5>
-  //         </div>
-  //     </div>
-  // );
-  
   render(){
     const { classes } = this.props;
     return (
-      <div className="single-box">
+      <>
         <h2>How are you feeling today?</h2>
-        {/* {overallConditionDisp} */}
-        <FormControl component="fieldset">
+        <FormControl 
+          className={classes.formControl}
+          component="fieldset">
           <RadioGroup 
-            aria-label="where?"
+            aria-label="Overall Condition"
             name="OverallCondition"
-            value={this.state.value}
-            onChange={this.handleChange}
+            value={this.handleConvToStr()}
+            onChange={this.handleConvToNum}
             className={classes.group}
           >
-            <FormControlLabel value="Excelent" control={<Radio />} label="Excelent" />
+            <FormControlLabel value="Excellent" control={<Radio />} label="Excellent" />
             <FormControlLabel value="Good" control={<Radio />} label="Good" />
             <FormControlLabel value="Normal" control={<Radio />} label="Normal" />
             <FormControlLabel value="I've been better" control={<Radio />} label="I've been better" />
             <FormControlLabel value="Don't ask.." control={<Radio />} label="Don't ask.." />
           </RadioGroup>
         </FormControl>
-    </div>
-  );
+    </>
+  )
 }
 }
 

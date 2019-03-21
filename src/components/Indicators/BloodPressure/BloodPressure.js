@@ -27,11 +27,6 @@ function BloodPressure(props) {
       elevation={2}>
       <div 
         className="input-container"
-        style={{
-          display: "flex",
-          padding: "15px",
-          justifyContent: "center"
-        }}
       >
         <input
           className="blood-pressure-input input-effect"

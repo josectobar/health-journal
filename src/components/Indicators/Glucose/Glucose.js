@@ -19,7 +19,6 @@ function Glucose(props) {
     <Paper 
       className="paper-container"
       elevation={2}>
-      <div>
         <input
           className="glucose-input input-effect"
           type="text"
@@ -30,7 +29,6 @@ function Glucose(props) {
             updateIndicator({glucose_level:{user_id:id, indicator_id: 1, reading: +e.target.value, date}})
           }
         />
-      </div>
     </Paper>
   );
 

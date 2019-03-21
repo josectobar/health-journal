@@ -31,7 +31,6 @@ class PainScale extends Component {
           <Paper 
             className="paper-container"
             elevation={2}>
-            <div>
               <input
                 className="slider-input input-effect"
                 value={pain_scale.reading}
@@ -45,7 +44,6 @@ class PainScale extends Component {
                 step={1}
                 onChange={(event, value) => updateIndicator({pain_scale:{user_id:id, indicator_id: 4, reading: value, date}})}
               />
-            </div>
           </Paper>
       );
     return (
