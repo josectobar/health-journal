@@ -11,7 +11,8 @@ const express = require('express'),
       { MASSIVE_CONNECTION, SESSION_SECRET, SERVER_PORT } = process.env,
       pgPool = new pg.Pool({
         connectionString: MASSIVE_CONNECTION
-    })
+      }),
+      path = require('path')
 
 //controllers:
     const authCtrl = require('./AuthController'),
@@ -45,7 +46,11 @@ massive(MASSIVE_CONNECTION)
     app.listen(SERVER_PORT, () => console.log(`Live on port: ${SERVER_PORT}`))
 })
 
+//hosting:
 app.use(express.static(__dirname + './../build'))
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 //EndPoints Auth:
 app.post('/auth/register', authCtrl.register)
