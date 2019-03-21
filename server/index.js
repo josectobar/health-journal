@@ -20,6 +20,8 @@ const express = require('express'),
       
 const app = express()
 
+app.use(express.static(__dirname + './../build'))
+
 //middleware:
 app.use(json())
 
@@ -47,10 +49,8 @@ massive(MASSIVE_CONNECTION)
 })
 
 //hosting:
-app.use(express.static(__dirname + './../build'))
-app.get('*', (req, res)=>{
-    res.sendFile(path.join(__dirname, '../build/index.html'));
-});
+
+
 
 //EndPoints Auth:
 app.post('/auth/register', authCtrl.register)
@@ -68,3 +68,7 @@ app.get('/api/entry/:entryid', ctrl.getEntry)
 app.get('/api/tags/:entryid', ctrl.getTags)
 app.delete('/api/entry/:entryid', ctrl.deleteEntry)
 app.put('/api/entry/:entryid', ctrl.updateEntry)
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});

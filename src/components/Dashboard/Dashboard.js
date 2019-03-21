@@ -56,7 +56,7 @@ class Dashboard extends Component {
         updateEntries,
         updateIndicators
       } = this.props;
-      if (!entries.length) {
+      if (_.isEmpty(entries)) {
         let entries = await axios.get("/api/entries");
         updateEntries(entries.data);
       }
@@ -125,7 +125,8 @@ class Dashboard extends Component {
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
+    console.log(this.props.entries);
+    
     //Rendering entries list:
     const entries = this.props.entries.map((entry, index) => {
       let { date } = entry;
