@@ -4,8 +4,6 @@ import './Header.scss'
 import { connect } from 'react-redux'
 import { updateUser, clearState } from '../../ducks/reducer'
 
-import ButtonUI from "../Button/ButtonUI"
-
 import axios from 'axios'
 
 class Header extends Component {

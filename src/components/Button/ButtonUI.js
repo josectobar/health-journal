@@ -20,7 +20,7 @@ function ButtonUI(props) {
       <Button 
         variant="contained" 
         onClick={props.action}
-        color="secondary" 
+        color={props.color}
         className={classes.button}>
         {props.label}
       </Button>

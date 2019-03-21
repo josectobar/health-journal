@@ -35,6 +35,7 @@ module.exports = {
         try {
             const db = req.app.get('db')
             const { id } = req.session.user
+            console.log(req.session.user)
             const { title, content, date } = req.body
             let updatedEntries = await db.entries.post_entry({user_id: id, title, content, date})
             res.status(200).send(updatedEntries)
@@ -85,5 +86,27 @@ module.exports = {
         } catch (error) {
             console.log(`error updating entry: ${error}`)
         }
+    },
+    getTags: async (req, res) => {
+        try{
+            const db = req.app.get('db')
+            const { entryid } = req.params
+            const { id } = req.session.user
+            const tags = await db.entries.get_tags({user_id:id, entry_id:entryid})
+            res.status(200).send(tags)
+        } catch (error) {
+            console.log(error)
+            res.sendStatus(500)
+        }
     }
+    // updateTags: async (req, res) => {
+    //     try {
+    //         const db = req.app.get('db')
+    //         const { body } = req
+
+    //     }catch (error) {
+    //         console.log(error)
+    //         res.sendStatus(500)
+    //     }
+    // }
 }

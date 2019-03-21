@@ -1,9 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 import './Wizard.css'
+import logo from '../../logo2.png'
 
-//Routes:
-import { Link } from 'react-router-dom'
+//MaterialUI:
+import Cancel from "@material-ui/icons/Cancel"
 
 //Redux:
 import { connect } from 'react-redux'
@@ -22,6 +23,7 @@ import StepTwo from './StepTwo/StepTwo'
  function Wizard(props) {
      const {id, date, updateDate, updateWizard} = props
      let { wizard } = props
+
     const handleWizardUpdate = async () => {
         wizard = !wizard
         await updateWizard(wizard)
@@ -31,12 +33,17 @@ import StepTwo from './StepTwo/StepTwo'
         return (
             <div>
                 <div className="parent-container">
-                        <h1>Day</h1>
-                    <div>
+                        <img src={logo} alt="logo"/>
+                    <div className="check-box-container">
                         <input type="checkbox" onChange={handleWizardUpdate} checked={wizard}/>
                         <span>Launch wizard at startup</span>
                     </div>
-                    <Link to="/day/dashboard">Cancel</Link>
+                    <div className="menu-btn">
+                        <div className='btn-label' aria-label="Wizard"  onClick={() => props.history.push("/day/dashboard")}>
+                            <Cancel />
+                            <label>Cancel</label>
+                        </div>
+                    </div>
                 </div>
                 <DatePicker
                         className="wizard-datepicker input-effect"

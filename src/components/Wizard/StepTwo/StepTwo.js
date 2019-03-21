@@ -5,7 +5,7 @@ import Compose from '../../Entry/Compose'
 import axios from 'axios'
 
 import { connect } from 'react-redux'
-import { clearState, updateIndicators } from '../../../ducks/indicatorsReducer'
+import { clearIndState, updateIndicators } from '../../../ducks/indicatorsReducer'
 import { clearEntry, updateEntries } from '../../../ducks/reducer'
 
 class StepTwo extends Component {
@@ -15,7 +15,7 @@ class StepTwo extends Component {
             updateIndicators, 
             updateEntries,
             clearEntry,
-            clearState,
+            clearIndState,
             blood_pressure_diastolic, 
             blood_pressure_systolic,
             pain_scale, 
@@ -41,7 +41,7 @@ class StepTwo extends Component {
         updateEntries(dbEntries.data)
         updateIndicators(dbIndicators.data)
         clearEntry()
-        clearState()
+        clearIndState()
         this.props.history.push('/day/dashboard')
     }
     render() {
@@ -80,7 +80,7 @@ const mapStateToProps = (reduxState) => {
 }
 
 const dispatchToProps = {
-    clearState,
+    clearIndState,
     updateIndicators,
     clearEntry,
     updateEntries

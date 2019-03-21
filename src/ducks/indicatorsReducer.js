@@ -15,7 +15,7 @@ const initialState = {
 const UPDATE_INDICATOR = "UPDATE_INDICATOR"
 const UPDATE_INDICATORS = "UPDATE_INDICATORS"
 const UPDATE_SWITCH = "UPDATE_SWITCH"
-const CLEAR_STATE = "CLEAR_STATE"
+const CLEAR_INDSTATE = "CLEAR_INDSTATE"
 const UPDATE_DATE = "UPDATE_DATE"
 
 export function updateDate(date){
@@ -47,9 +47,9 @@ export function updateSwitch(value){
     }
 }
 
-export function clearState(){
+export function clearIndState(){
     return {
-        type: CLEAR_STATE
+        type: CLEAR_INDSTATE
     }
 }
 
@@ -72,7 +72,7 @@ export default function indicatorsReducer( state = initialState, action ) {
             const value = payload
             return {...state, [value]: !state[value]}
         
-        case CLEAR_STATE:
+        case CLEAR_INDSTATE:
             return {
                 date: new Date(),
                 glucose_level: {user_id:null, indicator_id: null, reading: 0, date:null},
@@ -84,7 +84,7 @@ export default function indicatorsReducer( state = initialState, action ) {
                 painSwitch: false,
                 glucoseSwitch:false,
                 bloodPresureSwitch: false,
-                indicators: {}
+                ...state.indicators
             }
 
         default: 

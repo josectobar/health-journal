@@ -15,14 +15,6 @@ import {
   updateSwitch
 } from "../../../ducks/indicatorsReducer";
 
-// const styles = {
-//   root: {
-//     width: 300,
-//   },
-//   slider: {
-//     padding: '22px 0px',
-//   },
-// };
 
 class PainScale extends Component {
     state = {
@@ -47,7 +39,6 @@ class PainScale extends Component {
                 disabled={true}/>
               <Slider
                 className="slider"
-                // classes={{ container: classes.slider }}
                 value={pain_scale.reading}
                 min={0}
                 max={10}

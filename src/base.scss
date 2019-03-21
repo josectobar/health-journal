@@ -39,10 +39,9 @@
        margin: 0 auto;
        top: 4.8em;
     }
-    // clip-path: polygon(27% 16%, 100% 0%, 100% 86%, 0 98%);
-    background-color: #C1C8E4;
     position: absolute;
     z-index: -1;
+    background-color: $background-color;
     width: 100vw;
     height:100vh;
     .login-main {
@@ -52,7 +51,7 @@
         width: 20em;
         height: 20em;
         padding: 1em;
-        margin: 14em auto;
+        margin: 14em auto 0 auto;
         padding-top: 3em;
         input {
             width: 8em;
@@ -66,18 +65,50 @@
 }
 
 
+
+
 @media (min-width: 600px) {
     
     
     .background {
         .login-main{
             margin-bottom: 0;
-
         }
         
     }
 }
     
+/*-------------- Signup.js -------------------*/
+.signup-background{
+    position: absolute;
+    z-index: -1;
+    background-color: $secondary-color;
+    width: 100vw;
+    height:100vh;
+    .logo{
+        width: 15em;
+        position: absolute;
+        margin: 0 auto;
+        top: .8em;
+     }
+     .signup-main{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20em;
+        padding: 1em;
+        margin: 10em auto 0 auto;
+        padding-top: 3em;
+        input {
+            width: 9em;
+            margin: .7em auto;
+        }
+        button {
+            width: 10em;
+            margin: 2em auto;
+        }
+     }
+}
 /*-------------- Nav.js -------------------*/
 
 
@@ -85,15 +116,16 @@
     .logo-nav{
         position: absolute;
         width: 5em;
+        top: 0;
     }
     display: flex;
     flex-direction: column;
     position: fixed;
     z-index: 10;
-    top: 0;
-    left: 0;
+    width: .1em;
     height: 100vh;
-    width: 100vw;
+    bottom: 0;
+    left: 0;
     .menu-icons {
         display: flex;
         flex-direction: column;
@@ -131,7 +163,7 @@
     }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
     .nav-container {
         background-color: rgb(46, 58, 92);
         box-shadow: 2px 0px 20px .5px rgb(67, 66, 85);
@@ -184,34 +216,39 @@
     padding: 1em;
     padding-top: 6em;
     .stats-main {
-        height: 15em;
+        color: $secondary-color;
+        padding: 20px;
     }
         .flex-item {
-            width: 100%;
             margin-top: 1em;
             margin-bottom: 1em;
         }
         // -------Article image ------
-        .MuiButtonBase-root-9 {
-            // position: inherit;
-            z-index: -0;
-        }
         .entry-list-main {
+            h4{
+                margin: 10px auto;
+                color: $secondary-color;
+            }
+            font-family:  Nunito, Roboto, Lato;
             display: flex;
             flex-direction: column;
             // justify-content: end;
             align-items: flex-end;
             .entry-list-container {
                 display: flex;
-                align-items: flex-end;
+                width: 95%;
+                justify-content: space-between;
+                // align-items: flex-end;
                 .entry-list-map {
                     display: flex;
+                    justify-content: space-between;
+                    width: 100%;
                 }
             }
         }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
     .dashboard-container {
         background-color:  rgb(234, 237, 248);
         display: flex;
@@ -223,30 +260,23 @@
             width: 45%;
             margin:4em;
         }
-        .stats-main {
-            height: inherit;
-            min-width: 450px;
-            margin: 0;
-            margin-right: 2em;
+        .upper-container{
+            display: flex;
+            .stats-main {
+                height: inherit;
+                min-width: 450px;
+                margin: 0;
+                margin-right: 2em;
+            }
         }
             .entry-list-main {
                 display: flex;
                 flex-direction: column;
-                // justify-content: end;
                 align-items: space-around;;
                 margin-top: 1em;
                 margin-left: 0;
                 margin-right: 0;
-                width: 80%;
-                .entry-list-container {
-                    display: flex;
-                    align-items: space-around;
-                    .entry-list-map {
-                        display: flex;
-                        width: 100%;
-                        justify-content: space-around;
-                    }
-                }
+                width: 100%;
             }
     }
 }
@@ -261,10 +291,16 @@
     width: 40em;
 }
 .main-compose-container {
-    padding-top: 7em;
+    padding-top: 4.5em;
     height: 100vh;
-    padding-left: 3em;
-    padding-right: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    h1{
+        margin-bottom:0;
+        color: $secondary-color;
+    }
+
     .compose-text-date {
         display: flex;
         flex-direction: column;
@@ -283,18 +319,19 @@
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        width: 90%;
+        width: 100%;
         margin: 0 auto;
         .quill {
             position: block;
             height: 10em;
         }
-        .qlcontainer, .ql-snow{
+        .qlcontainer{
             position: inherit;
         }
         .compose-btn {
             position: absolute;
             bottom: 2em;
+            z-index: 20;
             left: 50%;
             width: 10em;
             padding: 1em;
@@ -304,7 +341,7 @@
 }
 @media (min-width: 600px) {
     .main-compose-container {
-        padding-left: 3em;
+        padding-left: 6em;
         padding-right: 3em;
 
         .compose-text-date {
@@ -313,6 +350,9 @@
             #date-picker{
                 margin: 0;
             }
+        }
+        .ql-container{
+            height: 22em;
         }
     }
 
@@ -392,47 +432,104 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 
 /*-------------- Wizard.js -----------------*/
 
-
-.wizard-datepicker {
-    width: 7em;
+.parent-container{
+    background-color: $dark-blue;
+    color: white;
+    height: 15vh;
+    margin-bottom: 1em;
+    display: flex;
+    h1{
+        color: $secondary-color;
+    }
+    img {
+        width: 6em;
+        left: 1em;
+        top: .5em;
+    }
+    .menu-btn {
+        :hover {
+            color: rgba(255, 255, 255, 0.342);
+        }
+        :active {
+            color:   rgba(6, 255, 172, 0.692);
+        }
+        .btn-label{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 2em;
+            height: 2em;
+            margin: 1em;
+            label {
+                font-size: 11px;
+                font-weight: 700;
+            }
+            
+        }
+    }
+    .check-box-container{
+        margin: 0 auto;
+        span{
+            font-weight: 700;
+        }
+    }
+    .wizard-datepicker {
+        width: 7em;
+    }
 }
 
+@media (min-width: 600px) {
+    .parent-container{
+        img {
+            width: 6em;
+            position: absolute;
+            left: 1em;
+            top: .5em;
+        }
+    }
+}
 /*-------------- StepOne.js -----------------*/
 
+.indicators-container{
+    display: flex;
+    flex-direction: column;
 
+}
 
-.step-one-main {
-    // display: flex;
-    padding: 1em;
-    .overall-condition-container {
-        margin: 0em auto;
-        display: flex;
-        width: 90%;
-        justify-content: space-around;
-    }
-    .indicators-container{
-        display: flex;
-        width: 90%;
-        padding: 0em;
-        .single-box{
-            padding: 1em;
-            .blood-pressure-input, .glucose-input {
-                width: 6em;
-            }
-            .glucose-input{
-                margin-top: 1.3em;
-            }
-            .slider-input {
-                width: 2.5em;
-            }
-            .slider {
-                width: 20em;
-                margin: 1em auto;
+@media (min-width: 600px) {
+    .step-one-main {
+        // display: flex;
+        padding: 1em;
+        .overall-condition-container {
+            margin: 0em auto;
+            display: flex;
+            width: 90%;
+            justify-content: space-around;
+        }
+        .indicators-container{
+            width: 90vw;
+            padding: 0em;
+            flex-direction: row;
+            .single-box{
+                padding: 1em;
+                .blood-pressure-input, .glucose-input {
+                    width: 6em;
+                }
+                .glucose-input{
+                    margin-top: 1.3em;
+                }
+                .slider-input {
+                    width: 2.5em;
+                }
+                .slider {
+                    width: 20em;
+                    margin: 1em auto;
+                }
             }
         }
     }
 }
-
+    
 .paper-container {
     width: 25em;
     height: 7em;
@@ -440,10 +537,31 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 }
 
 
-// .single-toggle {
-//     margin: 10px;
-// }
+/*---------------------- Stats.js -----------------------*/
+.stats-container{
+    padding-top: 4em;     
+        .chart-container{
+            width: 80%;
+            margin-bottom: 2em;
+        }
+            .button-containers{
+                display: flex;
+                justify-content: center;
+                margin: .5em;
+            }
+    .lower-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .chart-container{
+            width: 80%;
+            margin-bottom: 2em;
+        }
+    }
+}
 
-// .single-box {
-//     width: 25vw;
-// }
+@media (min-width: 800px) {
+    .stats-container{
+        padding-left: 6em;
+    }
+}

@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 //SASS:
 import "./Stepone.scss"
 
-//redux:
-import { connect } from 'react-redux'
-
 //MaterialUI:
 import Paper from "@material-ui/core/Paper";
 
@@ -21,7 +18,9 @@ class StepOne extends Component {
   render() {
     return (
       <>
-      <h1>StepOne</h1>
+      { this.props.location.pathname === '/wizard/stepone' &&
+        <h1>Let's get started..</h1>
+      }
       <div className="step-one-main">
         <Paper className="overall-condition-container" elevation={1}>
           <OverallCondition/>
@@ -32,14 +31,12 @@ class StepOne extends Component {
           <BloodPressure/>
         </div>
       </div>
+      { this.props.location.pathname === '/wizard/stepone' &&
         <Link to="/wizard/steptwo">Next</Link>
+      }
         </>
     )
   }
 }
 
-const DispatchToProps = {
-  
-}
-
-export default connect(null, DispatchToProps)(StepOne);
+export default StepOne;

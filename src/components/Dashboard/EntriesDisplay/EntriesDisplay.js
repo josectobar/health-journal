@@ -16,7 +16,7 @@ export default function EntriesDisplay(props){
         <div className="entry-list-container">
           <div
             className="entry-list-map"
-            onClick={() => this.handleEntryView(id)}
+            onClick={() => props.handleEntryView(id)}
             >
             <p>{title}</p>
             <p>{date}</p>

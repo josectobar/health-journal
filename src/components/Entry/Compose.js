@@ -55,15 +55,12 @@ class Compose extends Component {
       try {
         const { id } = this.props.match.params;
         const getEntry = await axios.get(`/api/entry/${id}`);
-        let { title, content, date, tags } = getEntry.data[0];
+        let { title, content, date} = getEntry.data[0];
         date = new Date(date)
-        tags = tags.split(',')
-        // console.log(tags)
         await this.props.updateEntry({
           title,
           content,
-          date,
-          tags
+          date
         });
       } catch (error) {
         console.log(error);
@@ -81,7 +78,7 @@ class Compose extends Component {
 
   async handleEntryUpdate() {
     const { id } = this.props.match.params;
-    const { title, content, date } = this.state;
+    const { title, content, date } = this.props.entry;
     let updatedPosts = await axios.put(`/api/entry/${id}`, {
       title,
       content,
@@ -98,6 +95,10 @@ class Compose extends Component {
   render() {
     const { updateEntry, entry } = this.props;
     // let source = document.querySelectorAll('.ql-editor img')[0] ? document.querySelectorAll('.ql-editor img')[0].src : null
+    // source = String(source)
+    // source = source ? source.split(',')[1] : '';
+    // source = window.btoa(source)
+    // source = window.atob(source)
     // console.log(source)
     return (
       <div className="main-compose-container">
@@ -125,7 +126,7 @@ class Compose extends Component {
         </div>
         <div className="quill-btn-container">
           <div className='tag-component'>
-            <Tags tags={this.props.tags}/>
+            {/* <Tags tags={this.props.tags} params={this.props.match.params}/> */}
           </div>
           <div>
             <ReactQuill

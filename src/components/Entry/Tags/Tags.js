@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 import { WithContext as ReactTags } from 'react-tag-input'
 import './Tags.scss'
 
+import _ from "lodash";
+
 //redux:
 import { connect } from 'react-redux'
+import { updateEntry } from '../../../ducks/reducer'
+import axios from 'axios';
  
 const KeyCodes = {
   comma: 188,
@@ -36,36 +40,55 @@ class Tags extends Component {
     }
 
     componentDidMount(){
-        // this.checkTags()
+        this.checkTags()
     }
 
-    checkTags(){
-        console.log(this.props)
-            this.setState({
-                tags: this.props.tags
-            })
+    checkTags  = async () => {
+        console.log(_.isEmpty(this.props.entry.tags) && this.props.params)
+        if (_.isEmpty(this.props.entry.tags) && this.props.params) {
+            try{
+                const { id } = this.props.params
+                let tags = await axios.get(`/api/tags/${id}`)
+                this.props.updateEntry({
+                    tags:tags.data
+                })
+                this.setState({
+                    tags: tags.data
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
     }
     
-    handleDelete(i) {
+    async handleDelete(i) {
         const { tags } = this.state;
-        this.setState({
+        await this.setState({
             tags: tags.filter((tag, index) => index !== i),
+        })
+        this.props.updateEntry({
+            tags: this.state.tags
         })
     }
     
-    handleAddition(tag) {
-        this.setState(state => ({ tags: [...state.tags, tag] }));
+    async handleAddition(tag) {
+        await this.setState(state => ({ tags: [...state.tags, tag] }));
+        this.props.updateEntry({tags: this.state.tags})
+        console.log(this.state.tags)
+
     }
     
-    handleDrag(tag, currPos, newPos) {
+    async handleDrag(tag, currPos, newPos) {
         const tags = [...this.state.tags];
         const newTags = tags.slice();
         
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
         
-        // re-render
-        this.setState({ tags: newTags });
+        await this.setState({ tags: newTags });
+        this.props.updateEntry({
+            tags: this.state.tags
+        })
     }
     
     render() {
@@ -90,4 +113,8 @@ const mapStateToProps = reduxState => {
     }
 }
 
-export default connect(mapStateToProps)(Tags)
+const dispatchToProps = {
+    updateEntry
+}
+
+export default connect(mapStateToProps, dispatchToProps)(Tags)

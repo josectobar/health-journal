@@ -28,7 +28,6 @@ const styles = theme => ({
 class Nav extends Component {
 
     render() {
-        const { classes } = this.props
         return (
             <>
                 {this.props.pathname.includes('/day') &&
