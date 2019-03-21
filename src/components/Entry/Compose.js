@@ -5,6 +5,9 @@ import "./Compose.scss";
 
 import axios from "axios";
 
+//MaterialUI:
+import ButtonUI from "../Button/ButtonUI";
+
 //Redux:
 import { updateEntries, updateEntry, clearEntry } from "../../ducks/reducer";
 import { connect } from "react-redux";
@@ -17,7 +20,7 @@ import ReactQuill from "react-quill"
 import {quillModules, quillFormats } from '../../utils/Entry/QuillJS/modules'
 
 //React-tag-input:
-import Tags from './Tags/Tags'
+// import Tags from './Tags/Tags'
 
 //Date-pickerjs:
 import DatePicker from "react-datepicker";
@@ -128,7 +131,6 @@ class Compose extends Component {
           <div className='tag-component'>
             {/* <Tags tags={this.props.tags} params={this.props.match.params}/> */}
           </div>
-          <div>
             <ReactQuill
               className="quill"
               theme="snow"
@@ -140,16 +142,23 @@ class Compose extends Component {
               onChange={delta => updateEntry({ content: delta })}
               />
           </div>
+          <div className="compose-btns">
             {this.props.location.pathname === "/day/compose" ? (
-              <button className="compose-btn" onClick={() => this.handleSave()}>
-                Submit
-              </button>
-            ) : this.props.location.pathname === "/wizard/steptwo" ? null : (
-              <button className="compose-btn" onClick={this.handleEntryUpdate}>
-                Save Changes
-              </button>
-            )}
-        </div>
+              <ButtonUI
+              action={() => this.handleSave()}
+              color={'secondary'}
+              label={"Submit"}
+              className="btn-ui compose-btn"
+              />
+              ) : this.props.location.pathname === "/wizard/steptwo" ? null : (
+                <ButtonUI
+                action={this.handleEntryUpdate}
+                color={'secondary'}
+                label={"Save Changes"}
+                className="btn-ui compose-btn"
+                />
+                )}
+          </div>
       </div>
     );
   }

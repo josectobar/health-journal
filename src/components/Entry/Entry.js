@@ -3,6 +3,9 @@ import DatePicker from 'react-datepicker'
 
 import axios from 'axios'
 
+//MaterialUI:
+import ButtonUI from "../Button/ButtonUI";
+
 //Redux:
 import { updateEntries } from '../../ducks/reducer'
 import { connect } from 'react-redux'
@@ -64,18 +67,30 @@ class Entry extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Entry</h1>
-                <h3>{this.state.title}</h3>
-                <button onClick={this.handleEdit}>Edit</button>
-                <button onClick={this.handleDelete}>Delete</button>
+            <div className="view-main">
+                <span>Title: </span><h2>{this.state.title}</h2>
+                <div className="entry-btns">
+                <ButtonUI
+                action={this.handleEdit}
+                color={'secondary'}
+                label={"Edit"}
+                className="btn-ui compose-btn"
+                />
+                <ButtonUI
+                action={this.handleDelete}
+                label={"Delete"}
+                className="btn-ui compose-btn"
+                />
                 <DatePicker
                     selected={this.state.date}
                     disabled={true}/>
+                </div>
+                <div className='quill'>
                 <ReactQuill
                     theme="bubble"
                     value={this.state.content}
                     readOnly={true}/>
+                </div>
             </div>
         )
     }
