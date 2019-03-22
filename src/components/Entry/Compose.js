@@ -97,12 +97,12 @@ class Compose extends Component {
 
   render() {
     const { updateEntry, entry } = this.props;
-    // let source = document.querySelectorAll('.ql-editor img')[0] ? document.querySelectorAll('.ql-editor img')[0].src : null
-    // source = String(source)
-    // source = source ? source.split(',')[1] : '';
-    // source = window.btoa(source)
-    // source = window.atob(source)
-    // console.log(source)
+    let source = document.querySelectorAll('.ql-editor img')[0] ? document.querySelectorAll('.ql-editor img')[0].src : null
+    source = String(source)
+    source = source ? source.split(',')[1] : '';
+    source = window.btoa(source)
+    source = window.atob(source)
+    console.log(source)
     return (
       <div className="main-compose-container">
         {this.props.location.pathname === "/day/compose" ? (

@@ -68,24 +68,24 @@ class Stats extends Component {
 
             {this.state.indicatorsToggle &&
               <>
-              <DatePicker
-              className="input-effect"
-              id="datepicker"
-              selected={date}
-              onChange={updateDate}
-              />
-                <StepOne 
-                  location={this.props.location}/>
-                <div className="button-containers">
-                  <ButtonUI 
-                  action={this.handleSubmit}
-                    color={'secondary'}
-                    label={'Submit'}/>
-                  <ButtonUI 
-                    action={this.handleToggle} 
-                    label={'Cancel'} 
-                    style={{backgroundColor: 'red'}}/>
-                </div>
+                <DatePicker
+                className="input-effect"
+                id="datepicker"
+                selected={date}
+                onChange={updateDate}
+                />
+                  <StepOne 
+                    location={this.props.location}/>
+                  <div className="button-containers">
+                    <ButtonUI 
+                    action={this.handleSubmit}
+                      color={'secondary'}
+                      label={'Submit'}/>
+                    <ButtonUI 
+                      action={this.handleToggle} 
+                      label={'Cancel'} 
+                      style={{backgroundColor: 'red'}}/>
+                  </div>
                 </>
             }
           <div className="lower-container">

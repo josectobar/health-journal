@@ -9,7 +9,7 @@ import Cancel from "@material-ui/icons/Cancel"
 //Redux:
 import { connect } from 'react-redux'
 import { updateWizard } from '../../ducks/reducer'
-import { updateDate } from '../../ducks/indicatorsReducer'
+import { updateDate, clearIndState } from '../../ducks/indicatorsReducer'
 
 //Date-pickerjs:
 import "react-datepicker/dist/react-datepicker.css"
@@ -23,6 +23,11 @@ import StepTwo from './StepTwo/StepTwo'
  function Wizard(props) {
      const {id, date, updateDate, updateWizard} = props
      let { wizard } = props
+
+     const handleCancel = () => {
+        props.clearIndState()
+        props.history.push("/day/dashboard")
+     }
 
     const handleWizardUpdate = async () => {
         wizard = !wizard
@@ -39,7 +44,7 @@ import StepTwo from './StepTwo/StepTwo'
                         <span>Launch wizard at startup</span>
                     </div>
                     <div className="menu-btn">
-                        <div className='btn-label' aria-label="Wizard"  onClick={() => props.history.push("/day/dashboard")}>
+                        <div className='btn-label' aria-label="Wizard"  onClick={() => handleCancel()}>
                             <Cancel />
                             <label>Cancel</label>
                         </div>
@@ -70,7 +75,8 @@ const mapStateToProps = ( reduxState ) => {
 
 const mapDispatchToProps = {
     updateWizard,
-    updateDate
+    updateDate,
+    clearIndState
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wizard)

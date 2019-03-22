@@ -12,13 +12,16 @@ const ITEM_HEIGHT = 48;
 export default function EntriesDisplay(props){
     const { id, title } = props.entry
     const {open, index, date, anchorEl, handleClick, handleSelect } = props
+    let color = null
     return (
         <div className="entry-list-container">
           <div
             className="entry-list-map"
             onClick={() => props.handleEntryView(id)}
             >
-            <p>{title}</p>
+            {title === '' ? 
+            <p style={{color:'gray', fontStyle:'italic'}}>untitled</p> : 
+            <p>{title}</p>}
             <p>{date}</p>
             </div>
             {/* -------------------------------------Material UI --------------------------------- */}

@@ -17,7 +17,7 @@ class StepOne extends Component {
 
   render() {
     return (
-      <>
+      <div className="main-container">
       { this.props.location.pathname === '/wizard/stepone' &&
         <h1>Let's get started..</h1>
       }
@@ -32,9 +32,9 @@ class StepOne extends Component {
         </div>
       </div>
       { this.props.location.pathname === '/wizard/stepone' &&
-        <Link to="/wizard/steptwo">Next</Link>
+        <Link id="next" to="/wizard/steptwo">Next</Link>
       }
-        </>
+        </div>
     )
   }
 }

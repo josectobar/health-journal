@@ -11,6 +11,7 @@ class GlucoseGraph extends Component{
     state = {
     indicatorId: [1]
     }
+
     render(){
         const { indicatorId } = this.state;
         //Rendering chart:

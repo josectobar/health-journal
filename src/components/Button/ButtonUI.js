@@ -16,7 +16,7 @@ const styles = theme => ({
 function ButtonUI(props) {
   const { classes } = props;
   return (
-    <div>
+    <div className="btn-ui-container">
       <Button 
         variant="contained" 
         onClick={props.action}

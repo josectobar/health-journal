@@ -4,6 +4,9 @@ import Compose from '../../Entry/Compose'
 
 import axios from 'axios'
 
+//MaterialUI:
+import ButtonUI from "../../Button/ButtonUI";
+
 import { connect } from 'react-redux'
 import { clearIndState, updateIndicators } from '../../../ducks/indicatorsReducer'
 import { clearEntry, updateEntries } from '../../../ducks/reducer'
@@ -57,7 +60,12 @@ class StepTwo extends Component {
                 </div>
                 <div className="btns-container">
                     <Link to="/wizard/stepone">Back</Link>
-                    <button onClick={this.handleSubmit}>Submit</button>
+                    <ButtonUI
+                    action={this.handleSubmit}
+                    color={'secondary'}
+                    label={"Submit"}
+                    className="btn-ui"
+                    />
                 </div>
             </>
         );

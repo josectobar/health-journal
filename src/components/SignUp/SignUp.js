@@ -80,6 +80,7 @@ class Register extends Component {
           label={"Sign Up"}
           action={this.handleSignUp}
         />
+        <a href="#/">Back</a>
         </Paper>
       </div>
     );

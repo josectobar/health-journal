@@ -14,25 +14,6 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-
-//   handleClick = event => {
-//     this.setState({ anchorEl: event.currentTarget });
-//   }
-
-//   handleClose = (props) => {
-//         console.log(props)
-//     // option === 'Delete'
-//     // ?
-//     //     this.handleDelete(id)
-//     // :
-//     //     option === 'Edit' 
-//     // ?
-//     //  this.handleEdit(id)
-//     //  :
-//     //  console.log('View')
-//     this.setState({ anchorEl: null });
-//   }
-
 export function EntryList(props){
 
     const ITEM_HEIGHT = 48;
