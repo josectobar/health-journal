@@ -38,22 +38,28 @@ class StepTwo extends Component {
         let dbEntries = await axios.post('/api/entry', entry)
         indicatorsArray = indicatorsArray.filter(obj => obj.reading)
         let dbIndicators = await axios.post('/api/indicators', indicatorsArray)
+        dbIndicators = dbIndicators.data.map(indicator => {
+            indicator.date = new Date(indicator.date)
+            return indicator
+          })
+        updateIndicators(dbIndicators)
         updateEntries(dbEntries.data)
-        updateIndicators(dbIndicators.data)
         clearEntry()
         clearIndState()
         this.props.history.push('/day/dashboard')
     }
     render() {
         return (
-            <div>
-                <h1>StepTwo</h1>
+            <>
                 <div className="wizard-compose">
+                <h1>Compose an entry</h1>
                     <Compose/>
                 </div>
-                <Link to="/wizard/stepone">Back</Link>
-                <button onClick={this.handleSubmit}>Submit</button>
-            </div>
+                <div className="btns-container">
+                    <Link to="/wizard/stepone">Back</Link>
+                    <button onClick={this.handleSubmit}>Submit</button>
+                </div>
+            </>
         );
     }
 }

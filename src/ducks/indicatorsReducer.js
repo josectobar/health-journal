@@ -17,7 +17,7 @@ const UPDATE_INDICATORS = "UPDATE_INDICATORS"
 const UPDATE_SWITCH = "UPDATE_SWITCH"
 const CLEAR_INDSTATE = "CLEAR_INDSTATE"
 const UPDATE_DATE = "UPDATE_DATE"
-
+const CLEAR_FULL_INDSTATE = "CLEAR_FULL_INDSTATE"
 export function updateDate(date){
     
     return {
@@ -53,6 +53,12 @@ export function clearIndState(){
     }
 }
 
+export function clearFullIndState(){
+    return {
+        type: CLEAR_FULL_INDSTATE
+    }
+}
+
 export default function indicatorsReducer( state = initialState, action ) {
     const { type, payload } = action
 
@@ -74,6 +80,20 @@ export default function indicatorsReducer( state = initialState, action ) {
         
         case CLEAR_INDSTATE:
             return {
+                indicators: state.indicators,
+                date: new Date(),
+                glucose_level: {user_id:null, indicator_id: null, reading: 0, date:null},
+                blood_pressure_systolic: {user_id:null, indicator_id: null, reading: 0, date:null},
+                blood_pressure_diastolic: {user_id:null, indicator_id: null, reading: 0, date:null},
+                pain_scale:{user_id:null, indicator_id: null, reading: 0, date:null},
+                overall_condition: {user_id:null, indicator_id: null, reading: 0, date:null},
+                overallConditionSwitch: true,
+                painSwitch: false,
+                glucoseSwitch:false,
+                bloodPresureSwitch: false
+            }
+        case CLEAR_FULL_INDSTATE:
+            return {
                 date: new Date(),
                 glucose_level: {user_id:null, indicator_id: null, reading: 0, date:null},
                 blood_pressure_systolic: {user_id:null, indicator_id: null, reading: 0, date:null},
@@ -84,7 +104,7 @@ export default function indicatorsReducer( state = initialState, action ) {
                 painSwitch: false,
                 glucoseSwitch:false,
                 bloodPresureSwitch: false,
-                ...state.indicators
+                indicators: {} 
             }
 
         default: 

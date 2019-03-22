@@ -89,7 +89,9 @@ class Entry extends Component {
                 <ReactQuill
                     theme="bubble"
                     value={this.state.content}
-                    readOnly={true}/>
+                    readOnly={true}>
+                    <div className="test-field" style={{height:'1px'}}/>    
+                </ReactQuill>
                 </div>
             </div>
         )

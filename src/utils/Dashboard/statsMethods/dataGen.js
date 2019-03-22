@@ -15,7 +15,7 @@ export function dataGen(indicatorsId, propsIndicators){
         let months = getMonths(indicators);
         indicators = filterIndicator(indicators, id);
         // labels months without duplacates
-        let labels = getLabels(months);
+        let labels = getLabels(months)
         let Data = getData(indicators, labels, id);
         let labelName = getLabelName(id);
         const result = {
@@ -26,7 +26,7 @@ export function dataGen(indicatorsId, propsIndicators){
               data: Data
             }
           ]
-        };
+        }
         return result;
       });
     return chartDisplay

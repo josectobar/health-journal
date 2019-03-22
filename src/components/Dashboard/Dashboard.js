@@ -63,8 +63,8 @@ class Dashboard extends Component {
       if (_.isEmpty(indicators)) {
         let dbIndicators = await axios.get("/api/indicators");
         dbIndicators = dbIndicators.data.map(indicator => {
-          indicator.date = new Date(indicator.date);
-          return indicator;
+          indicator.date = new Date(indicator.date)
+          return indicator
         });
         updateIndicators(dbIndicators);
       }
@@ -125,7 +125,6 @@ class Dashboard extends Component {
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    console.log(this.props.entries);
     
     //Rendering entries list:
     const entries = this.props.entries.map((entry, index) => {
@@ -157,7 +156,7 @@ class Dashboard extends Component {
           <div className="dashboard-container">
           <div className="upper-container">
             <Paper className="flex-item stats-main" elevation={4}>
-              <MainChart className="flex-item mainchart" />
+              <MainChart height={250} className="flex-item mainchart" />
               <Link to="/day/dashboard/stats">Stats</Link>
             </Paper>
             <ArticlesCard className="flex-item article-card" article={this.state.article} />

@@ -18,7 +18,6 @@ class MainChart extends Component {
     //Rendering chart:
     
     const chartDisplay = dataGen(indicatorsId, this.props.indicators)
-
     const data = {
       labels: chartDisplay[0].labels,
       datasets: [
@@ -65,12 +64,13 @@ class MainChart extends Component {
           data: chartDisplay[1].datasets[0].data
         }
       ]
-    };
+    }
     return (
       <>
         <h4>Overall condition & Pain level Average</h4>
         <Line 
-          data={data} 
+          data={data}
+          height={this.props.height}
         />
       </>
     )

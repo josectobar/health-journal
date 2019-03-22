@@ -15,7 +15,6 @@ class BloodPressureGraph extends Component{
     render(){
         const { indicatorsId } = this.state;
         //Rendering chart:
-        
         const chartDisplay = dataGen(indicatorsId, this.props.indicators)
         const data = {
             labels: chartDisplay[0].labels,

@@ -14,7 +14,9 @@ module.exports = {
             body.map(async (indicator) => {
                 try {
                     const { indicator_id, reading, date } = indicator
-                    return await db.indicators.update_indicators({user_id: id, indicator_id, reading, date}) 
+                    if (reading) {
+                        return await db.indicators.update_indicators({user_id: id, indicator_id, reading, date}) 
+                    }
                 } catch (error) {
                     console.log(error)
                 }

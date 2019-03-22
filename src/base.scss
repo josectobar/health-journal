@@ -298,6 +298,12 @@
         box-shadow: 5px 5px 20px 1px rgba(0, 0, 0, 0.158);
     }
 }
+
+@media (min-width: 800px) {
+    .view-main{
+
+    }
+}
     
 /*-------------- Compose.js -----------------*/
 
@@ -306,24 +312,24 @@
 }
 .main-compose-container {
     padding-top: 4.5em;
-    height: 100vh;
-    padding-left: 1em;
-    padding-right: 1em;
-
+    padding-left: .5em;
+    padding-right: .5em;
+    .ql-container{
+        height: 30vh;
+    }
     h1{
-        margin-bottom:0;
+        margin-bottom: 0em;
         color: $secondary-color;
     }
 
     .compose-text-date {
         display: flex;
         flex-direction: column;
-        // justify-content: center;
-        margin: 0 auto;
+        align-items: center;
         
         input {
-            margin: 1em auto;
-            width: 15em;   
+            margin: .2em auto;
+            width: 13em;   
         }
         #datepicker {
             width: 10em;
@@ -335,20 +341,10 @@
         justify-content: space-between;
         width: 100%;
         margin: 0 auto;
-        .quill {
-            position: block;
-            height: 10em;
-        }
-        .qlcontainer{
-            position: inherit;
-        }
     }
-        .compose-btns {
-            position: absolute;
-            bottom:2em;
-            z-index: 20;
-            left: 45vw;
-        }
+    .compose-btns{
+        margin-top:18%;
+    }
 }
 @media (min-width: 600px) {
     .main-compose-container {
@@ -356,17 +352,16 @@
         padding-right: 3em;
 
         .compose-text-date {
-            width: 90%;
             flex-direction: row;
-            #date-picker{
-                margin: 0;
-            }
+
         }
         .ql-container{
-            height: 22em;
+            height: 35vh;
         }
     }
-
+    .compose-btns{
+        margin-top: 10%;
+    }
 
 }
     /*-------------- Tags.js -----------------*/
@@ -555,9 +550,34 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     }
 }
     
+/*---------------------- StepTwo.js -----------------------*/
 
-
-
+.wizard-compose{
+    display: flex;
+    flex-direction: column;
+    h1 {
+        margin: .2em;
+        font-size: 25px;
+    }
+    .main-compose-container{
+        input {
+            margin: .5em auto;
+        }
+        padding: 1em;
+        width: 80%;
+        height: 55vh;
+        margin: 0 auto;
+        
+    }
+}
+.btns-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5em;
+    padding-top: 1.5em;
+    padding-left: 2em;
+    padding-right: 2em;
+}
 /*---------------------- Stats.js -----------------------*/
 .stats-container{
     padding-top: 4em;     

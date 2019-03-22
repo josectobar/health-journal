@@ -7,11 +7,13 @@ import BloodPressureGraph from './BloodPressureGraph/BloodPressureGraph'
 import StepOne from '../../Wizard/StepOne/StepOne'
 import ButtonUI from '../../Button/ButtonUI'
 
+import axios from 'axios'
+
 //Date-pickerjs:
 import DatePicker from "react-datepicker";
 
 //redux:
-import { updateDate, clearIndState } from '../../../ducks/indicatorsReducer'
+import { updateDate, clearIndState, updateIndicators } from '../../../ducks/indicatorsReducer'
 import { connect } from 'react-redux'
 
 class Stats extends Component {
@@ -25,6 +27,34 @@ class Stats extends Component {
       indicatorsToggle: !this.state.indicatorsToggle
     })
   }
+
+  handleSubmit = async () => {
+    const { 
+      updateIndicators,
+      clearIndState,
+      blood_pressure_diastolic, 
+      blood_pressure_systolic,
+      pain_scale, 
+      overall_condition, 
+      glucose_level
+     } = this.props
+     let indicatorsArray = [
+      {...blood_pressure_systolic},
+      {...blood_pressure_diastolic},
+      {...pain_scale},
+      {...overall_condition},
+      {...glucose_level}
+    ]
+    let dbIndicators = await axios.post('/api/indicators', indicatorsArray)
+    dbIndicators = dbIndicators.data.map(indicator => {
+      indicator.date = new Date(indicator.date)
+      return indicator
+    })
+    updateIndicators(dbIndicators)
+    clearIndState()
+    this.handleToggle()
+  }
+
   render() {
     const { date, updateDate } = this.props
     return (
@@ -48,6 +78,7 @@ class Stats extends Component {
                   location={this.props.location}/>
                 <div className="button-containers">
                   <ButtonUI 
+                  action={this.handleSubmit}
                     color={'secondary'}
                     label={'Submit'}/>
                   <ButtonUI 
@@ -77,15 +108,28 @@ class Stats extends Component {
 }
 
 const mapStateToProps = reduxState => {
-  const { date } = reduxState.indicatorsReducer
+  const { 
+    date,
+    blood_pressure_diastolic, 
+    blood_pressure_systolic,
+    pain_scale, 
+    overall_condition, 
+    glucose_level
+   } = reduxState.indicatorsReducer
   return {
-    date
+    date,
+    blood_pressure_diastolic, 
+    blood_pressure_systolic,
+    pain_scale, 
+    overall_condition, 
+    glucose_level
   }
 }
 
 const mapDispatchToProps = {
   updateDate,
-  clearIndState
+  clearIndState,
+  updateIndicators
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stats)
