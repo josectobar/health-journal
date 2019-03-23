@@ -12,7 +12,6 @@ const ITEM_HEIGHT = 48;
 export default function EntriesDisplay(props){
     const { id, title } = props.entry
     const {open, index, date, anchorEl, handleClick, handleSelect } = props
-    let color = null
     return (
         <div className="entry-list-container">
           <div
@@ -42,7 +41,8 @@ export default function EntriesDisplay(props){
                 PaperProps={{
                   style: {
                     maxHeight: ITEM_HEIGHT * 4.5,
-                    width: 200
+                    width: 200,
+                    boxShadow:"1px 2px 5px .5px rgba(197, 197, 197, 0.142)",
                   }
                 }}
               >

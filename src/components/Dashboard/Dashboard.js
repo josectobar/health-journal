@@ -53,37 +53,38 @@ class Dashboard extends Component {
     try {
       const {
         indicators,
-        entries,
         updateEntries,
         updateIndicators
-      } = this.props;
-      if (_.isEmpty(entries)) {
-        let entries = await axios.get("/api/entries");
-        updateEntries(entries.data);
-      }
+      } = this.props
+        let dbentries = await axios.get("/api/entries");
+        updateEntries(dbentries.data);
       if (_.isEmpty(indicators)) {
         let dbIndicators = await axios.get("/api/indicators");
         dbIndicators = dbIndicators.data.map(indicator => {
-          indicator.date = new Date(indicator.date)
-          return indicator
+          indicator.date = new Date(indicator.date);
+          return indicator;
         });
         updateIndicators(dbIndicators);
       }
 
       // ------------------Articles ------------------///
-      if (_.isEmpty(this.state.apiOneArticles)) {
+      if (_.isEmpty(this.state.article.title)) {
         const apiKey = "6bc1156549ec47f3b0e638a9780c0167";
-        let date = new Date()
-        date.setDate(date.getDate() - 27)
+        let date = new Date();
+        date.setDate(date.getDate() - 27);
         let newsApiArticles = await axios.get(
-          `https://newsapi.org/v2/everything?q=+headaches&+OR+fibromyalgia&+OR+fatigue&from=${date.toISOString().substring(0, 10)}&sortBy=publishedAt&to=2019-03-14&apiKey=${apiKey}&sources=medical-news-today`
+          `https://newsapi.org/v2/everything?q=headaches&+OR+fibromyalgia&+OR+fatigue&from=${date
+            .toISOString()
+            .substring(
+              0,
+              10
+            )}&sortBy=publishedAt&to=2019-03-14&apiKey=${apiKey}&sources=medical-news-today`
         );
         let article =
           newsApiArticles.data.articles[
             Math.floor(
               Math.random() * Math.floor(newsApiArticles.data.articles.length)
-            )
-          ]
+            )]
         this.setState({
           article: article
         });
@@ -128,12 +129,12 @@ class Dashboard extends Component {
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    
+
     //Rendering entries list:
     const entries = this.props.entries.map((entry, index) => {
       let { date } = entry;
       date = new Date(date);
-      date = date.toLocaleDateString()
+      date = date.toLocaleDateString();
       return (
         <EntryDisplay
           key={index}
@@ -146,8 +147,8 @@ class Dashboard extends Component {
           handleEntryView={this.handleEntryView}
           handleSelect={this.handleSelect}
         />
-      )
-    })
+      );
+    });
 
     return (
       <div>
@@ -157,15 +158,20 @@ class Dashboard extends Component {
         </Switch>
         {this.props.location.pathname === "/day/dashboard" && (
           <div className="dashboard-container">
-          <div className="upper-container">
-            <Paper className="flex-item stats-main" elevation={4}>
-              <MainChart height={215} className="flex-item mainchart" />
-              <Link to="/day/dashboard/stats">Stats</Link>
-            </Paper>
-            <ArticlesCard className="flex-item article-card" article={this.state.article} />
-          </div>
-            <Paper elevation={4} className="flex-item entry-list-main">
-            <h4>Previous entries</h4>
+            <div className="upper-container">
+              <Paper className="flex-item stats-main" elevation={2}>
+                <MainChart height={223} />
+                <Link className="stats-link" to="/day/dashboard/stats">
+                  View indicators stats
+                </Link>
+              </Paper>
+              <ArticlesCard
+                className="flex-item article-card"
+                article={this.state.article}
+              />
+            </div>
+            <Paper elevation={2} className="flex-item entry-list-main">
+              <h4>Previous entries</h4>
               {entries}
             </Paper>
           </div>

@@ -85,14 +85,10 @@ class Entry extends Component {
                     selected={this.state.date}
                     disabled={true}/>
                 </div>
-                <div className='quill'>
                 <ReactQuill
                     theme="bubble"
                     value={this.state.content}
-                    readOnly={true}>
-                    <div className="test-field" style={{height:'1px'}}/>    
-                </ReactQuill>
-                </div>
+                    readOnly={true}/>
             </div>
         )
     }
