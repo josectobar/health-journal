@@ -6,7 +6,6 @@ import App from './App';
 //HashRouter: 
 import { HashRouter as Router } from 'react-router-dom'
 
-
 // import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

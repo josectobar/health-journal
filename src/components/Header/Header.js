@@ -4,6 +4,11 @@ import './Header.scss'
 import { connect } from 'react-redux'
 import { updateUser, clearState } from '../../ducks/reducer'
 
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+
+
 import axios from 'axios'
 
 class Header extends Component {
@@ -40,11 +45,20 @@ class Header extends Component {
             <>
             {this.props.pathname.includes('/day') &&
             <header className="header-container">
-                <h2>Hello {this.props.name}!</h2>
-                <button
+                <h2>Hi {this.props.name}!</h2>
+                <div className="menu-icons">
+                    <div className='btn-label' aria-label="Logout" onClick={this.handleLogout}>
+                        <FontAwesomeIcon 
+                            icon={faSignOutAlt}
+                            size="lg"/>
+                        <label>Logout</label>
+                    </div>
+                </div>
+                {/* <button
                     onClick={this.handleLogout}>
                     Logout
-                </button>
+                </button> */}
+                
             </header>
                 }
             </>
