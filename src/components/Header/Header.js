@@ -3,6 +3,7 @@ import './Header.scss'
 //redux:
 import { connect } from 'react-redux'
 import { updateUser, clearState } from '../../ducks/reducer'
+import { clearFullIndState } from '../../ducks/indicatorsReducer'
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -37,6 +38,7 @@ class Header extends Component {
     handleLogout =  async () => {
         await axios.post('/auth/logout')
         await this.props.clearState()
+        await this.props.clearFullIndState()
         this.props.push('/')            
     }
 
@@ -54,11 +56,6 @@ class Header extends Component {
                         <label>Logout</label>
                     </div>
                 </div>
-                {/* <button
-                    onClick={this.handleLogout}>
-                    Logout
-                </button> */}
-                
             </header>
                 }
             </>
@@ -76,7 +73,8 @@ const mapStateToProps = ( reduxState ) => {
 
 const mapDispatchToProps = {
     updateUser,
-    clearState
+    clearState,
+    clearFullIndState
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)
