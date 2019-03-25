@@ -40,9 +40,12 @@ class Header extends Component {
             <>
             {this.props.pathname.includes('/day') &&
             <header className="header-container">
-                        <h2>Hello {this.props.name}!</h2>
-                        <button onClick={this.handleLogout}>Logout</button>
-                        </header>
+                <h2>Hello {this.props.name}!</h2>
+                <button
+                    onClick={this.handleLogout}>
+                    Logout
+                </button>
+            </header>
                 }
             </>
         );

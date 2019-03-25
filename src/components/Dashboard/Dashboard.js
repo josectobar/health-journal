@@ -11,9 +11,8 @@ import Paper from "@material-ui/core/Paper";
 
 //Redux:
 import { connect } from "react-redux";
-import { updateEntries } from "../../ducks/reducer";
+import { updateEntries, updateArticle } from "../../ducks/reducer";
 import { updateIndicators } from "../../ducks/indicatorsReducer";
-import { getMainChart } from "../../ducks/statsReducer";
 
 //Routes:
 import { Switch, Route, Link } from "react-router-dom";
@@ -23,8 +22,7 @@ import Articles from "./Articles/Articles";
 //Components:
 import EntryDisplay from "../Dashboard/EntriesDisplay/EntriesDisplay";
 import ArticlesCard from "./Articles/ArticlesCard/ArticlesCard";
-import MainChart from "./Stats/MainChart/MainChart";
-import { format } from "url";
+import MainChart from "./Stats/MainChart/MainChart"
 
 class Dashboard extends Component {
   constructor() {
@@ -32,13 +30,7 @@ class Dashboard extends Component {
     this.state = {
       anchorEl: null,
       id: 0,
-      index: -1,
-      article: {
-        description: ``,
-        title: ``,
-        urlToImage: ``,
-        source: ``
-      }
+      index: -1
     };
 
     this.handleDataRequest = this.handleDataRequest.bind(this);
@@ -68,27 +60,26 @@ class Dashboard extends Component {
       }
 
       // ------------------Articles ------------------///
-      if (_.isEmpty(this.state.article.title)) {
+      if (_.isEmpty(this.props.article.title)) {
         const apiKey = "6bc1156549ec47f3b0e638a9780c0167";
         let date = new Date();
         date.setDate(date.getDate() - 27);
         let newsApiArticles = await axios.get(
           `https://newsapi.org/v2/everything?q=headaches&+OR+fibromyalgia&+OR+fatigue&from=${date
-            .toISOString()
-            .substring(
-              0,
-              10
+          .toISOString()
+          .substring(
+            0,
+            10
             )}&sortBy=publishedAt&to=2019-03-14&apiKey=${apiKey}&sources=medical-news-today`
-        );
-        let article =
-          newsApiArticles.data.articles[
-            Math.floor(
-              Math.random() * Math.floor(newsApiArticles.data.articles.length)
+            )
+            let article =
+            newsApiArticles.data.articles[
+              Math.floor(
+                Math.random() * Math.floor(newsApiArticles.data.articles.length)
             )]
-        this.setState({
-          article: article
-        });
-      }
+            article.content = article.content.substring(261, article.length - 262)
+            this.props.updateArticle(article)
+          }
     } catch (error) {
       console.log(error);
     }
@@ -127,9 +118,8 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-
+    const { anchorEl } = this.state
+    const open = Boolean(anchorEl)
     //Rendering entries list:
     const entries = this.props.entries.map((entry, index) => {
       let { date } = entry;
@@ -147,14 +137,13 @@ class Dashboard extends Component {
           handleEntryView={this.handleEntryView}
           handleSelect={this.handleSelect}
         />
-      );
-    });
-
+      )
+    })
     return (
       <div>
         <Switch>
           <Route path="/day/dashboard/stats" component={Stats} />
-          <Route path="/day/dashboard/articles" component={Articles} />
+          <Route path="/day/dashboard/article" exact component={Articles} />
         </Switch>
         {this.props.location.pathname === "/day/dashboard" && (
           <div className="dashboard-container">
@@ -167,7 +156,7 @@ class Dashboard extends Component {
               </Paper>
               <ArticlesCard
                 className="flex-item article-card"
-                article={this.state.article}
+                article={this.props.article}
               />
             </div>
             <Paper elevation={2} className="flex-item entry-list-main">
@@ -182,20 +171,19 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = reduxState => {
-  const { entries } = reduxState.reducer;
-  const { indicators } = reduxState.indicatorsReducer;
-  const { mainChart } = reduxState.statsReducer;
+  const { entries, article } = reduxState.reducer
+  const { indicators } = reduxState.indicatorsReducer
   return {
     entries,
     indicators,
-    mainChart
-  };
-};
+    article
+  }
+}
 
 const dispatchToProps = {
   updateEntries,
   updateIndicators,
-  getMainChart
+  updateArticle
 };
 
 export default connect(

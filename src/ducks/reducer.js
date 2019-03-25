@@ -11,6 +11,12 @@ const initialState = {
         title: ``,
         tags: []
     },
+    article: {
+        description: ``,
+        title: ``,
+        urlToImage: ``,
+        source: ``
+    },
     wizard: true
 }
 
@@ -20,6 +26,7 @@ const CLEAR_STATE = 'CLEAR_STATE'
 const CLEAR_ENTRY = 'CLEAR_ENTRY'
 const UPDATE_ENTRIES = 'UPDATE_ENTRIES'
 const UPDATE_ENTRY = 'UPDATE_ENTRY'
+const UPDATE_ARTICLE = 'UPDATE_ARTICLE'
 
 
 export function updateUser(user) {
@@ -46,6 +53,13 @@ export function updateEntries(entries) {
 export function updateEntry(obj) {
     return {
         type: UPDATE_ENTRY,
+        payload: obj
+    }
+}
+
+export function updateArticle(obj) {
+    return {
+        type: UPDATE_ARTICLE,
         payload: obj
     }
 }
@@ -106,6 +120,11 @@ export default function reducer(state = initialState, action) {
                     ...payload
                 }
             }
+        case UPDATE_ARTICLE:
+        return {
+            ...state,
+            article: {...payload}
+        }
 
         case CLEAR_STATE:
             return {
@@ -120,6 +139,12 @@ export default function reducer(state = initialState, action) {
                     content: ``,
                     title: ``,
                     tags: []
+                },
+                article: {
+                    description: ``,
+                    title: ``,
+                    urlToImage: ``,
+                    source: ``
                 },
                 wizard: true
             }

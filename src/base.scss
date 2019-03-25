@@ -77,6 +77,9 @@ html {
             width: 10em;
             margin: 2em auto;
         }
+        a {
+            margin: 0;
+        }
     }
 }
 @media (min-width: 600px) { 
@@ -114,10 +117,23 @@ html {
             margin: .7em auto;
         }
         button {
-            width: 10em;
-            margin: 2em auto;
+            width: 9em;
+
+            margin: 1em auto;
         }
      }
+
+     @media (min-width: 600px) {
+         .logo{
+             width: 11.5em;
+             top: .6em;
+         }
+     }
+     .signup-main{
+        padding-top: 1.2em;
+        margin-top: 7.5em;
+     }
+
 }
 /*-------------- Nav.js -------------------*/
 
@@ -215,6 +231,7 @@ html {
         margin-right: 1em;
     }
 }
+
 /*-------------- Dashboard.js -------------------*/
 
 .dashboard-container {
@@ -235,40 +252,44 @@ html {
             margin: 1em;
         }
     }
-        .flex-item {
-            margin-top: 1em;
-            margin-bottom: 1em;
+    .article-card{
+        p {
+            text-align: left;
         }
-        // -------Article image ------
-        .entry-list-main {
-            max-height: 30em;
-            // overflow: scroll;
-            font-family:  Nunito, Roboto, Lato;
+    }
+    .flex-item {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+    .entry-list-main {
+        max-height: 30em;
+        // overflow: scroll;
+        font-family:  Nunito, Roboto, Lato;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 1em 0;
+        h4{
+            margin: 10px auto;
+            color: $secondary-color;
+        }
+        .entry-list-container {
             display: flex;
-            flex-direction: column;
+            width: 95%;
+            justify-content: space-between;
             align-items: flex-end;
-            padding: 1em 0;
-            h4{
-                margin: 10px auto;
-                color: $secondary-color;
-            }
-            .entry-list-container {
+            .entry-list-map {
                 display: flex;
-                width: 95%;
                 justify-content: space-between;
-                align-items: flex-end;
-                .entry-list-map {
-                    display: flex;
-                    justify-content: space-between;
-                    cursor: pointer;
-                    :hover {
-                        opacity: .5;
-                        font-weight: 700;
-                    }
-                    width: 100%;
+                cursor: pointer;
+                :hover {
+                    opacity: .5;
+                    font-weight: 700;
                 }
+                width: 100%;
             }
         }
+    }
 }
 
 @media (min-width: 800px) {
@@ -296,10 +317,38 @@ html {
                 align-items: space-around;
                 margin: 1em 0;
                 width: 100%;
+                text-align: left;   
             }
+        }  
+}
+/*-------------- Article.js -----------------*/
+
+.article-paper{
+    padding-top: 5em;
+    height: 100%;
+    background-color: black;
+    h1 {
+        color: $secondary-color;
+    }
+    img{
+        width: 100%;
+    }
+    p{
+        font-family: roboto;
+        font-size: 1.2em;
+        text-align: left;
+        padding: 0 1em;
     }
 }
 
+@media (min-width: 800px) {
+    .article-paper{
+        padding-left: 5em;
+        img {
+            width:70%;
+        }
+    }
+}
 
 /*-------------- Entry.js -----------------*/
 .view-main{
@@ -466,11 +515,14 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
             left: 1em;
             top: .5em;
         }
+        .cancel-btn{
+            margin-right: 1.5em;
+        }
     }
 }
 /*-------------- StepOne.js -----------------*/
 .main-container{
-    padding-bottom: 1em;
+    background-color: rgba(193, 200, 228, 0.418);;
 }
 .step-one-main{
     padding-bottom: 1em;
@@ -569,8 +621,13 @@ a {
 }
 
 @media (min-width: 800px) {
+
     a {
-        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+    .btns-container{
+        padding-top: 0;
+        padding-bottom: 0;
     }
 }
 
@@ -597,16 +654,19 @@ a {
     }
 }
 
-@media (min-width: 938px) {
+@media (min-width: 800px) {
     .stats-container{
-        padding-left: 6em;
+        .main-container{
+            height:88vh;
+        }
     }
 }
 
 @media (min-width: 938px) {
     .stats-container{
+        padding-left: 5em;
         .main-container{
-            height:55vh;
+            height:61vh;
         }
     }
 }

@@ -43,7 +43,7 @@ import StepTwo from './StepTwo/StepTwo'
                         <input type="checkbox" onChange={handleWizardUpdate} checked={wizard}/>
                         <span>Launch wizard at startup</span>
                     </div>
-                    <div className="menu-btn">
+                    <div className="menu-btn cancel-btn">
                         <div className='btn-label' aria-label="Wizard"  onClick={() => handleCancel()}>
                             <Cancel />
                             <label>Cancel</label>

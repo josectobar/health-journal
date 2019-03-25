@@ -17,30 +17,44 @@ const styles = {
     height: 240,
 
   },
+  p: {
+    textAlign: 'left'
+  }
 };
 
 function ArticlesCard(props) {
-  const { description, title, urlToImage, source } = props.article
-  const { classes } = props;
+  const { content, title, urlToImage, source, url  } = props.article
+  const { classes } = props
   return (
     <Card className={classes.card}>
-      <CardActionArea>
+      <CardActionArea
+        target="_blank"
+        href={url}>
         <CardMedia
           className={classes.media}
           image={urlToImage}
-          title={source}
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+        <CardContent
+          title={source}
+          >
+          <Typography 
+            gutterBottom variant="h5" component="h2">
             {title}
           </Typography>
-          <Typography component="p">
-            {description}
+          <Typography
+            className={classes.p}
+            component="p">
+            {content}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button 
+          size="small" 
+          color="primary"
+          target="_blank"
+          href={url}
+          >
           Learn More
         </Button>
       </CardActions>
