@@ -10,6 +10,9 @@ import Home from "@material-ui/icons/Home"
 import Edit from "@material-ui/icons/Edit"
 import Stars from "@material-ui/icons/Stars"
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartBar } from '@fortawesome/free-solid-svg-icons'
+
 const styles = theme => ({
     button: {
       margin: theme.spacing.unit,
@@ -45,6 +48,12 @@ class Nav extends Component {
                             <div className='btn-label' aria-label="Wizard"  onClick={() => this.props.history.push('/wizard/stepone')}>
                                 <Stars />
                                 <label>Wizard</label>
+                            </div>
+                            <div className='btn-label' aria-label="Graph"  onClick={() => this.props.history.push('/day/dashboard/stats')}>
+                                <FontAwesomeIcon 
+                                icon={faChartBar}
+                                size="lg"/>
+                                <label>View stats</label>
                             </div>
                         </div>  
                     </nav>

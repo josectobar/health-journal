@@ -159,6 +159,7 @@ html {
         position: absolute;
         bottom: .1em;
         left: .1em;
+        padding-bottom: 1em;
         background-color:  rgba(46, 58, 92,0.5);
         border-radius: 20px;
         :hover {
@@ -287,7 +288,7 @@ html {
         margin-bottom: 1em;
     }
     .entry-list-main {
-        max-height: 30em;
+        // max-height: 30em;
         // overflow: scroll;
         font-family:  Nunito, Roboto, Lato;
         display: flex;
@@ -331,7 +332,7 @@ html {
         .upper-container{
             display: flex;
             .stats-main {
-                height: inherit;
+                // height: inherit;
                 min-width: 450px;
                 margin: 0;
                 margin-right: 1em;
