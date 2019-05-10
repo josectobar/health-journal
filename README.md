@@ -12,5 +12,4 @@ Backend: ExpressJS, MassiveJS, BcryptJS.
 FrontEnd: React, Redux, SASS, QuillJS, LoDash, ChartJS.
 
 ### Contact information
-
-Email: josectobar@gmail.com - Github:https://github.com/josectobar - LinkedIn: https://www.linkedin.com/in/josectobar/
+Portfolio: www.jctobar.com - Email: josectobar@gmail.com - Github:https://github.com/josectobar - LinkedIn: https://www.linkedin.com/in/josectobar/
