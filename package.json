@@ -21,7 +21,7 @@
     "express-session": "^1.15.6",
     "lodash": "^4.17.11",
     "massive": "^5.7.7",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "pg": "^7.8.1",
     "quill-image-uploader": "^1.0.2",
     "react": "^16.8.3",
